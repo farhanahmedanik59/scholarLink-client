@@ -25,7 +25,7 @@ const Hero = () => {
         ))}
       </motion.div>
 
-      <div className="absolute inset-0  flex flex-col items-center justify-center text-center px-4">
+      <div className="absolute inset-1  flex flex-col items-center justify-center text-center px-4">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">Unlock Your Future. Find Your Scholarship.</h1>
         <p className="mt-4 text-lg sm:text-xl text-gray-300 drop-shadow-md font-bold">
           A scholarship is a financial award that helps students pursue their education.<br></br> It may be based on academic achievement, talent, or financial need, supporting students in reaching
