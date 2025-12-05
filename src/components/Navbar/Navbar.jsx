@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { FaUser, FaSignOutAlt, FaTachometerAlt, FaChevronDown, FaGraduationCap, FaSearch, FaBell, FaHome, FaBook, FaQuestionCircle, FaFileAlt } from "react-icons/fa";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
+  const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await logOut();
+      await logout();
       setIsDropdownOpen(false);
     } catch (error) {
       console.error("Logout failed:", error);
