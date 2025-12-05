@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaGraduationCap, FaMapMarkerAlt, FaUniversity, FaTag, FaDollarSign, FaArrowRight } from "react-icons/fa";
+import { FaGraduationCap, FaMapMarkerAlt, FaUniversity, FaTag, FaDollarSign, FaArrowRight, FaAward, FaCalendarAlt } from "react-icons/fa";
 
 const TopScholarships = () => {
   const axiosSecure = useAxiosSecure();
@@ -39,6 +39,25 @@ const TopScholarships = () => {
       </div>
     );
 
+  // Function to format date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
+  // Function to calculate days remaining
+  const calculateDaysRemaining = (deadline) => {
+    const deadlineDate = new Date(deadline);
+    const today = new Date();
+    const diffTime = deadlineDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 0;
+  };
+
   return (
     <section className="bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -55,93 +74,146 @@ const TopScholarships = () => {
 
         {/* Scholarship Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {scholarships.map((sch) => (
-            <div
-              key={sch._id}
-              className="group bg-gradient-to-br from-gray-900/80 to-gray-800/60 
-              border border-gray-700/50 rounded-2xl p-6 
-              hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/20
-              transition-all duration-300 hover:-translate-y-1"
-            >
-              {/* University Header with Icon */}
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-gradient-to-r from-blue-600/20 to-cyan-500/20 p-3 rounded-xl">
-                    <FaUniversity className="text-blue-400 text-xl" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors">{sch.scholarshipName}</h3>
-                    <div className="flex items-center gap-1 text-gray-400 text-sm mt-1">
-                      <FaMapMarkerAlt className="text-xs" />
+          {scholarships.map((sch) => {
+            const daysRemaining = calculateDaysRemaining(sch.applicationDeadline);
+            const isDeadlineSoon = daysRemaining <= 30;
+            const isFullFund = sch.scholarshipCategory?.toLowerCase() === "full fund";
+
+            return (
+              <div
+                key={sch._id}
+                className="group bg-gradient-to-br from-gray-900/80 to-gray-800/60 
+                border border-gray-700/50 rounded-2xl overflow-hidden
+                hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/20
+                transition-all duration-300 hover:-translate-y-1"
+              >
+                {/* University Image with Overlay */}
+                <div className="relative h-48 w-full overflow-hidden">
+                  {sch.universityImage ? (
+                    <>
+                      <img
+                        src={sch.universityImage}
+                        alt={sch.universityName}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                          e.target.parentElement.innerHTML = `
+                            <div class="w-full h-full bg-gradient-to-br from-blue-600/20 to-cyan-500/20 flex items-center justify-center">
+                              <FaUniversity class="text-5xl text-blue-400" />
+                            </div>
+                          `;
+                        }}
+                      />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent"></div>
+
+                      {/* World Rank Badge */}
+                      <div className="absolute top-4 left-4 bg-gradient-to-r from-blue-900/90 to-cyan-900/90 backdrop-blur-sm border border-blue-700/50 rounded-full px-3 py-1 flex items-center gap-1">
+                        <FaAward className="text-yellow-400 text-xs" />
+                        <span className="text-white text-xs font-medium">#{sch.universityWorldRank}</span>
+                      </div>
+
+                      {/* Scholarship Category Badge */}
+                      <div
+                        className={`absolute top-4 right-4 backdrop-blur-sm border rounded-full px-3 py-1 ${
+                          isFullFund ? "bg-gradient-to-r from-green-900/90 to-emerald-900/90 border-green-700/50" : "bg-gradient-to-r from-amber-900/90 to-orange-900/90 border-amber-700/50"
+                        }`}
+                      >
+                        <span className={`text-xs font-medium ${isFullFund ? "text-green-300" : "text-amber-300"}`}>{sch.scholarshipCategory}</span>
+                      </div>
+
+                      {/* University Name Overlay */}
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="text-xl font-bold text-white truncate">{sch.scholarshipName}</h3>
+                        <div className="flex items-center gap-1 text-gray-300 text-sm mt-1">
+                          <FaUniversity className="text-xs" />
+                          <span className="truncate">{sch.universityName}</span>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-cyan-500/20 flex items-center justify-center">
+                      <FaUniversity className="text-5xl text-blue-400" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Scholarship Details */}
+                <div className="p-6">
+                  {/* Location & Deadline */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2 text-gray-400 text-sm">
+                      <FaMapMarkerAlt className="text-blue-400" />
                       <span>
                         {sch.universityCity}, {sch.universityCountry}
                       </span>
                     </div>
+                    <div className={`flex items-center gap-2 text-sm ${isDeadlineSoon ? "text-amber-400" : "text-gray-400"}`}>
+                      <FaCalendarAlt className={isDeadlineSoon ? "text-amber-400" : ""} />
+                      <span>{formatDate(sch.applicationDeadline)}</span>
+                    </div>
                   </div>
+
+                  {/* Degree & Subject */}
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="bg-gray-800/30 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
+                        <FaGraduationCap />
+                        <span>Degree</span>
+                      </div>
+                      <p className="text-white font-medium">{sch.degree}</p>
+                    </div>
+
+                    <div className="bg-gray-800/30 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
+                        <FaTag />
+                        <span>Subject</span>
+                      </div>
+                      <p className="text-white font-medium">{sch.subjectCategory}</p>
+                    </div>
+                  </div>
+
+                  {/* Fees Information */}
+                  <div className="bg-gray-800/20 rounded-xl p-4 border border-gray-700/50 mb-4">
+                    <h4 className="text-gray-300 text-sm font-medium mb-2 flex items-center gap-2">
+                      <FaDollarSign className="text-green-400" />
+                      Financial Details
+                    </h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <p className="text-gray-400 text-xs">Annual Tuition</p>
+                        <p className="text-white font-semibold">${sch.tuitionFees.toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-400 text-xs">Application Fee</p>
+                        <p className="text-white font-semibold">${sch.applicationFees}</p>
+                      </div>
+                    </div>
+                    {isDeadlineSoon && daysRemaining > 0 && (
+                      <div className="mt-3 pt-3 border-t border-gray-700/50">
+                        <div className="flex items-center justify-between">
+                          <span className="text-amber-300 text-sm">Deadline in</span>
+                          <span className="text-amber-400 font-bold">{daysRemaining} days</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* CTA Button */}
+                  <Link
+                    to={`/scholarships/${sch._id}`}
+                    className="group/btn w-full bg-gradient-to-r from-blue-600 to-cyan-500 
+                    hover:from-blue-700 hover:to-cyan-600 text-white font-medium 
+                    py-3 px-4 rounded-xl flex items-center justify-center gap-2 
+                    transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25"
+                  >
+                    View Full Details
+                    <FaArrowRight className="group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
-
-              {/* Scholarship Details */}
-              <div className="space-y-4 mb-6">
-                <div className="grid grid-cols-2 gap-3">
-                  {/* Degree */}
-                  <div className="bg-gray-800/50 rounded-lg p-3">
-                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
-                      <FaGraduationCap />
-                      <span>Degree</span>
-                    </div>
-                    <p className="text-white font-medium">{sch.degree}</p>
-                  </div>
-
-                  {/* Category */}
-                  <div className="bg-gray-800/50 rounded-lg p-3">
-                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
-                      <FaTag />
-                      <span>Category</span>
-                    </div>
-                    <p className="text-white font-medium">{sch.scholarshipCategory}</p>
-                  </div>
-                </div>
-
-                {/* Fees Information */}
-                <div className="bg-gray-800/30 rounded-xl p-4 border border-gray-700/50">
-                  <h4 className="text-gray-300 text-sm font-medium mb-2 flex items-center gap-2">
-                    <FaDollarSign className="text-green-400" />
-                    Financial Information
-                  </h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <p className="text-gray-400 text-xs">Tuition Fees</p>
-                      <p className="text-white font-semibold">${sch.tuitionFees.toLocaleString()}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-400 text-xs">Application Fee</p>
-                      <p className="text-white font-semibold">${sch.applicationFees.toLocaleString()}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* University Info */}
-                <div className="pt-4 border-t border-gray-700/50">
-                  <p className="text-gray-300 text-sm">
-                    <span className="text-white font-medium">University:</span> {sch.universityName}
-                  </p>
-                </div>
-              </div>
-
-              {/* CTA Button */}
-              <Link
-                to={`/scholarships/${sch._id}`}
-                className="group/btn w-full bg-gradient-to-r from-blue-600 to-cyan-500 
-                hover:from-blue-700 hover:to-cyan-600 text-white font-medium 
-                py-3 px-4 rounded-xl flex items-center justify-center gap-2 
-                transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25"
-              >
-                View Full Details
-                <FaArrowRight className="group-hover/btn:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* View All Button */}
@@ -152,7 +224,7 @@ const TopScholarships = () => {
             hover:bg-gray-700/50 text-white font-medium rounded-xl 
             border border-gray-700 hover:border-gray-600 transition-all duration-300"
           >
-            Browse All Scholarships
+            Browse All Scholarships ({scholarships.length})
             <FaArrowRight />
           </Link>
         </div>
