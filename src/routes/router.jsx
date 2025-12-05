@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home/Home";
 import HomeLayout from "../layouts/HomeLayout";
 import Login from "../components/Login/Login";
 import ScholarshipDetails from "../pages/Home/ScholarshipsDetails/ScholarshipsDetails";
+import Register from "../components/Register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: "scholarships/:id",
         Component: ScholarshipDetails,
+      },
+      {
+        path: "register",
+        Component: Register,
       },
     ],
   },
