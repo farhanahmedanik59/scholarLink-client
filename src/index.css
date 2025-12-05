@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light;
+}
+@plugin "daisyui/theme" {
+  --color-base-100: #718096;
+  --btn-primary: #434e78;
+}
