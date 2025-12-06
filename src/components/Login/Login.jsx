@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock, FaEnvelope, FaArrowLeft, FaGoogle } from "react-icons/fa";
 import { Link, Navigate, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   const { signIn, googleAuth } = useAuth();
   const [error, setError] = useState("");
   const {
@@ -42,7 +44,18 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleAuth().then((userCred) => {
       if (userCred.user) {
-        navigate("/");
+        const user = userCred.user;
+
+        const userInfo = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        };
+        axiosSecure.post("/user/auth", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            navigate("/");
+          }
+        });
       }
     });
   };
@@ -59,7 +72,6 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
-          {/* Left Side - Welcome Section */}
           <div className="lg:w-1/2 text-center lg:text-left">
             <div className="max-w-lg mx-auto lg:mx-0">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl mb-6">
@@ -91,7 +103,6 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Right Side - Login Form */}
           <div className="lg:w-1/2 max-w-md w-full">
             <div className="bg-gray-900/60 backdrop-blur-xl border border-gray-700 rounded-2xl p-8 shadow-2xl">
               <h2 className="text-2xl font-bold text-white text-center mb-2">Sign In to Your Account</h2>
@@ -165,7 +176,6 @@ const Login = () => {
                   </div>
                 </div>
 
-                {/* Submit Button */}
                 {error && <p className="text-white">{error}</p>}
                 <button
                   type="submit"
@@ -187,7 +197,6 @@ const Login = () => {
                 </button>
               </form>
 
-              {/* Divider */}
               <div className="my-8">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
@@ -199,13 +208,11 @@ const Login = () => {
                 </div>
               </div>
 
-              {/* Google Login Button */}
               <button
                 onClick={handleGoogleLogin}
                 className="w-full flex items-center justify-center gap-3 py-3 bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 font-medium rounded-xl transition-all duration-300 hover:shadow-md"
               >
                 <div className="w-5 h-5 relative">
-                  {/* Custom Google G Logo */}
                   <svg viewBox="0 0 24 24" className="w-full h-full">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -231,7 +238,6 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Additional Info */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
               <div className="text-gray-400 text-sm">
                 <div className="text-green-400 font-bold">✓ Secure</div>

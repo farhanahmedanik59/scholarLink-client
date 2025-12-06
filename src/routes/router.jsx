@@ -6,6 +6,10 @@ import Login from "../components/Login/Login";
 import ScholarshipDetails from "../pages/Home/ScholarshipsDetails/ScholarshipsDetails";
 import Register from "../components/Register/Register";
 import AllScholarships from "../pages/Home/AllScholarships/AllScholarships";
+import Page404 from "../pages/Page404/Page404";
+import DashboardLayout from "../layouts/DashboardLayout";
+import PrivateRoute from "./PrivateRoute";
+import UserInfo from "../pages/Dashboard/UserInfo/UserInfo";
 
 export const router = createBrowserRouter([
   {
@@ -33,5 +37,23 @@ export const router = createBrowserRouter([
         Component: AllScholarships,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    Component: DashboardLayout,
+    children: [
+      {
+        path: "myProfile",
+        element: (
+          <PrivateRoute>
+            <UserInfo></UserInfo>
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "*",
+    Component: Page404,
   },
 ]);
