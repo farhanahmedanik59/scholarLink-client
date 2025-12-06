@@ -10,8 +10,8 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Home", href: "/", icon: <FaHome /> },
-    { name: "Scholarships", href: "/scholarships", icon: <FaBook /> },
-    { name: "How It Works", href: "/how-it-works", icon: <FaQuestionCircle /> },
+    { name: "All Scholarships", href: "/Allscholarships", icon: <FaBook /> },
+    // { name: "How It Works", href: "/how-it-works", icon: <FaQuestionCircle /> },
     { name: "Resources", href: "/resources", icon: <FaFileAlt /> },
   ];
 
@@ -63,6 +63,12 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            {user && (
+              <Link to="/dashboard" onClick={() => setIsDropdownOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors">
+                <FaTachometerAlt className="text-blue-400" />
+                <span>Dashboard</span>
+              </Link>
+            )}
           </div>
 
           {/* Right Side - Auth & Search */}
