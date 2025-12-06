@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -38,6 +38,9 @@ import {
 } from "react-icons/fa";
 
 const ScholarshipDetails = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
