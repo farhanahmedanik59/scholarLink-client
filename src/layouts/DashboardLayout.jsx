@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, NavLink, useNavigate } from "react-router";
+import { Outlet, NavLink, useNavigate, Link } from "react-router";
 import { FaBars, FaTimes, FaUser, FaGraduationCap, FaTachometerAlt, FaUserCog, FaShieldAlt, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 const DashboardLayout = () => {
@@ -23,12 +23,14 @@ const DashboardLayout = () => {
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:flex-shrink-0`}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-700/50">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center">
-              <FaGraduationCap className="text-white text-xl" />
+          <Link to={"/"}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center">
+                <FaGraduationCap className="text-white text-xl" />
+              </div>
+              <h1 className="text-white font-bold text-xl">ScholarLink</h1>
             </div>
-            <h1 className="text-white font-bold text-xl">ScholarLink</h1>
-          </div>
+          </Link>
           <button className="text-gray-400 hover:text-white lg:hidden" onClick={() => setSidebarOpen(false)}>
             <FaTimes className="w-5 h-5" />
           </button>
@@ -36,11 +38,7 @@ const DashboardLayout = () => {
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-cyan-500/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
-            onClick={() => setSidebarOpen(false)}
-          >
+          <NavLink to="/dashboard" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg `} onClick={() => setSidebarOpen(false)}>
             <FaTachometerAlt /> Dashboard
           </NavLink>
           <NavLink
@@ -53,11 +51,7 @@ const DashboardLayout = () => {
 
           {/* Add more links based on roles */}
           {activeRole === "student" && (
-            <NavLink
-              to="/dashboard/profile"
-              className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-blue-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
-              onClick={() => setSidebarOpen(false)}
-            >
+            <NavLink to="/dashboard/profile" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg `} onClick={() => setSidebarOpen(false)}>
               <FaUser /> My Profile
             </NavLink>
           )}
@@ -79,12 +73,13 @@ const DashboardLayout = () => {
                 <FaUserCog /> Add ScholarShips
               </NavLink>
               <NavLink
-                to="/dashboard/addScholarships"
+                to="/dashboard/manageScholarships"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> Manage Scholarships
+                <FaUserCog /> Manage ScholarShips
               </NavLink>
+
               <NavLink
                 to="/dashboard/analytics"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}

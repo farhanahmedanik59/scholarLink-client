@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaUser, FaEnvelope, FaLock, FaImage, FaArrowLeft, FaUserGraduate, FaShieldAlt, FaGraduationCap } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const { googleAuth } = useAuth();
 
   const {
     register,
@@ -47,7 +51,22 @@ const Register = () => {
   };
 
   const handleGoogleRegister = () => {
-    console.log("Google registration initiated");
+    googleAuth().then((userCred) => {
+      if (userCred.user) {
+        const user = userCred.user;
+
+        const userInfo = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        };
+        axiosSecure.post("/user/auth", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            navigate("/");
+          }
+        });
+      }
+    });
   };
 
   return (

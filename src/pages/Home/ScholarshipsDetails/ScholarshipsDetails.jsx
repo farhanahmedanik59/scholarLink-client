@@ -46,7 +46,6 @@ const ScholarshipDetails = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedTab, setSelectedTab] = useState("overview");
 
-  // Fetch scholarship details with the new structure
   const {
     data: responseData = {},
     isLoading,
@@ -55,18 +54,16 @@ const ScholarshipDetails = () => {
     queryKey: ["scholarship", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/scholarships/${id}`);
-      return res.data; // This will return { scholarship: {...}, reviewData: {...} }
+      return res.data;
     },
   });
 
-  // Extract scholarship and review data from response
   const scholarship = responseData.scholarship || {};
   const reviewData = responseData.reviewData || {};
 
   // Create reviews array from reviewData
   const reviews = reviewData._id ? [reviewData] : [];
 
-  // Calculate days remaining until deadline
   const calculateDaysRemaining = (deadline) => {
     if (!deadline) return 0;
     const deadlineDate = new Date(deadline);
@@ -76,7 +73,6 @@ const ScholarshipDetails = () => {
     return diffDays > 0 ? diffDays : 0;
   };
 
-  // Format date function
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -87,7 +83,6 @@ const ScholarshipDetails = () => {
     });
   };
 
-  // Format date for review (relative or absolute)
   const formatReviewDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -107,7 +102,6 @@ const ScholarshipDetails = () => {
     });
   };
 
-  // Render star rating
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -162,7 +156,6 @@ const ScholarshipDetails = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Breadcrumb */}
         <nav className="mb-8">
           <ol className="flex items-center text-sm text-gray-400">
             <li>
@@ -186,9 +179,7 @@ const ScholarshipDetails = () => {
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Main Content */}
           <div className="lg:col-span-2">
-            {/* Scholarship Type Alert */}
             {isPartialScholarship && (
               <div className="mb-6 bg-gradient-to-r from-amber-900/20 to-orange-900/20 border border-amber-700/30 rounded-2xl p-4">
                 <div className="flex items-center gap-3">
@@ -201,7 +192,6 @@ const ScholarshipDetails = () => {
               </div>
             )}
 
-            {/* Deadline Alert */}
             {isDeadlineSoon && (
               <div className="mb-6 bg-gradient-to-r from-amber-900/20 to-orange-900/20 border border-amber-700/30 rounded-2xl p-4">
                 <div className="flex items-center justify-between">
@@ -217,10 +207,8 @@ const ScholarshipDetails = () => {
               </div>
             )}
 
-            {/* Scholarship Header Card */}
             <div className="bg-gray-900/60 border border-gray-700 rounded-2xl p-8 backdrop-blur-xl mb-8">
               <div className="flex flex-col md:flex-row gap-8">
-                {/* University Image */}
                 <div className="flex-shrink-0">
                   <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-600/20 to-cyan-500/20 border border-gray-700 flex items-center justify-center">
                     {scholarship.universityImage ? (
@@ -237,14 +225,13 @@ const ScholarshipDetails = () => {
                       <FaUniversity className="text-5xl text-blue-400" />
                     )}
                   </div>
-                  {/* World Rank Badge */}
+
                   <div className="mt-4 inline-flex items-center gap-2 bg-gradient-to-r from-blue-900/30 to-cyan-900/30 border border-blue-700/30 rounded-full px-4 py-2">
                     <FaAward className="text-yellow-400" />
                     <span className="text-white font-medium">World Rank: #{scholarship.universityWorldRank}</span>
                   </div>
                 </div>
 
-                {/* Scholarship Info */}
                 <div className="flex-grow">
                   <div className="flex justify-between items-start mb-4">
                     <div>
@@ -275,7 +262,6 @@ const ScholarshipDetails = () => {
                     </div>
                   </div>
 
-                  {/* Key Stats */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-4">
                       <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
@@ -307,7 +293,6 @@ const ScholarshipDetails = () => {
                     </div>
                   </div>
 
-                  {/* Status Alert */}
                   <div className={`mb-6 p-4 rounded-xl ${isDeadlinePassed ? "bg-red-900/20 border-red-700/30" : "bg-blue-900/20 border-blue-700/30"} border`}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
@@ -321,7 +306,6 @@ const ScholarshipDetails = () => {
                     </div>
                   </div>
 
-                  {/* Quick Apply Button */}
                   <button
                     onClick={() => navigate(`/checkout/${scholarship._id}`)}
                     disabled={isDeadlinePassed}
@@ -339,7 +323,6 @@ const ScholarshipDetails = () => {
               </div>
             </div>
 
-            {/* Tab Navigation */}
             <div className="bg-gray-900/60 border border-gray-700 rounded-2xl backdrop-blur-xl mb-8">
               <div className="flex border-b border-gray-700 overflow-x-auto">
                 {["overview", "coverage", "reviews"].map((tab) => (
@@ -355,7 +338,6 @@ const ScholarshipDetails = () => {
                 ))}
               </div>
 
-              {/* Tab Content */}
               <div className="p-8">
                 {selectedTab === "overview" && (
                   <div className="space-y-6">
@@ -410,7 +392,6 @@ const ScholarshipDetails = () => {
                     <h3 className="text-2xl font-bold text-white mb-4">Financial Coverage Details</h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {/* Financial Coverage */}
                       <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-2xl p-6">
                         <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                           <FaMoneyBillWave className="text-green-400" />
@@ -442,7 +423,6 @@ const ScholarshipDetails = () => {
                         </ul>
                       </div>
 
-                      {/* Additional Information */}
                       <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-2xl p-6">
                         <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                           <FaShieldAlt className="text-blue-400" />
@@ -488,12 +468,10 @@ const ScholarshipDetails = () => {
                       </button>
                     </div>
 
-                    {/* Reviews from Database */}
                     {reviews.length > 0 ? (
                       <div className="space-y-6">
                         {reviews.map((review) => (
                           <div key={review._id} className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-2xl p-6">
-                            {/* Review Header */}
                             <div className="flex items-start justify-between mb-4">
                               <div className="flex items-center gap-4">
                                 <div className="relative">
@@ -516,7 +494,7 @@ const ScholarshipDetails = () => {
                                       {review.userName ? review.userName.charAt(0) : "U"}
                                     </div>
                                   )}
-                                  {/* Verified Badge */}
+
                                   <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1 border-2 border-gray-900">
                                     <FaCheckCircle className="text-white text-xs" />
                                   </div>
@@ -534,7 +512,6 @@ const ScholarshipDetails = () => {
                                 </div>
                               </div>
 
-                              {/* Rating */}
                               <div className="flex flex-col items-end">
                                 <div className="flex items-center gap-2">
                                   <div className="flex items-center gap-1">{renderStars(review.ratingPoint || 0)}</div>
@@ -547,12 +524,10 @@ const ScholarshipDetails = () => {
                               </div>
                             </div>
 
-                            {/* Review Comment */}
                             <div className="mb-4">
                               <p className="text-gray-300 leading-relaxed whitespace-pre-line">{review.reviewComment || "No comment provided."}</p>
                             </div>
 
-                            {/* Review Actions & Info */}
                             <div className="flex items-center justify-between pt-4 border-t border-blue-700/30">
                               <div className="flex items-center gap-4">
                                 <button className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors">
@@ -571,7 +546,6 @@ const ScholarshipDetails = () => {
                           </div>
                         ))}
 
-                        {/* Review Summary */}
                         <div className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6">
                           <h4 className="text-xl font-bold text-white mb-4">Review Summary</h4>
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -593,7 +567,6 @@ const ScholarshipDetails = () => {
                             </div>
                           </div>
 
-                          {/* Rating Distribution */}
                           <div className="mt-6">
                             <h5 className="text-white font-bold mb-3">Rating Distribution</h5>
                             <div className="space-y-2">
@@ -631,7 +604,6 @@ const ScholarshipDetails = () => {
                       </div>
                     )}
 
-                    {/* Review Guidelines */}
                     <div className="mt-8 bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-2xl p-6">
                       <h4 className="text-xl font-bold text-white mb-4">Review Guidelines</h4>
                       <ul className="space-y-2 text-gray-300">
@@ -659,9 +631,7 @@ const ScholarshipDetails = () => {
             </div>
           </div>
 
-          {/* Right Column - Sidebar */}
           <div className="lg:col-span-1">
-            {/* Application Fees Card */}
             <div className="bg-gray-900/60 border border-gray-700 rounded-2xl p-6 backdrop-blur-xl mb-6">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <FaDollarSign className="text-green-400" />
@@ -717,7 +687,6 @@ const ScholarshipDetails = () => {
               </div>
             </div>
 
-            {/* Review Summary Card */}
             {reviews.length > 0 && (
               <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-2xl p-6 mb-6">
                 <h4 className="text-white font-bold mb-4 flex items-center gap-2">
@@ -742,7 +711,6 @@ const ScholarshipDetails = () => {
               </div>
             )}
 
-            {/* Contact & Stats Card */}
             <div className="bg-gray-900/60 border border-gray-700 rounded-2xl p-6 backdrop-blur-xl mb-6">
               <h3 className="text-xl font-bold text-white mb-6">Scholarship Statistics</h3>
 
@@ -779,7 +747,6 @@ const ScholarshipDetails = () => {
               </div>
             </div>
 
-            {/* Important Dates Card */}
             <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-2xl p-6">
               <h4 className="text-white font-bold mb-4">Important Dates</h4>
               <div className="space-y-4">
