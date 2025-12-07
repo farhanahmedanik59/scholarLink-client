@@ -2,8 +2,8 @@ import React, { Children } from "react";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import { useNavigate } from "react-router";
-import Login from "../pages/Auth/Login/Login";
-import Unauthorizr from "../components/Unauthorizr/Unauthorizr";
+
+import Unauthorized from "../components/Unauthorized/Unauthorized";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -15,7 +15,7 @@ const AdminRoute = ({ children }) => {
   console.log(role);
 
   if (role !== "admin") {
-    return <Unauthorizr></Unauthorizr>;
+    return <Unauthorized></Unauthorized>;
   }
 
   return children;

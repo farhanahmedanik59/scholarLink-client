@@ -10,6 +10,8 @@ import Page404 from "../pages/Page404/Page404";
 import DashboardLayout from "../layouts/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import UserInfo from "../pages/Dashboard/UserInfo/UserInfo";
+import AdminRoute from "./AdminRoute";
+import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +49,16 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UserInfo></UserInfo>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "users-management",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <UsersManagement></UsersManagement>
+            </AdminRoute>
           </PrivateRoute>
         ),
       },

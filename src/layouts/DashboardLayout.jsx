@@ -65,7 +65,7 @@ const DashboardLayout = () => {
           {activeRole === "admin" && (
             <>
               <NavLink
-                to="/dashboard/usersManagement"
+                to="/dashboard/users-management"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
@@ -108,11 +108,11 @@ const DashboardLayout = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Topbar */}
-        <header className="flex items-center justify-between px-6 py-4 bg-purple-300 shadow-sm">
+        <header className="flex items-center justify-between px-6 py-4 bg-[#0F1A2C]  shadow-sm">
           <button className="text-gray-600 lg:hidden" onClick={() => setSidebarOpen(true)}>
             <FaBars className="w-6 h-6" />
           </button>
-          <h1 className="text-xl font-bold">{roleTitles[activeRole]}</h1>
+          <h1 className="text-xl text-white font-bold">{roleTitles[activeRole]}</h1>
         </header>
 
         {/* Page Content */}
