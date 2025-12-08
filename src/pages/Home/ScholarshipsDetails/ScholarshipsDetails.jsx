@@ -36,15 +36,36 @@ import {
   FaStarHalf,
   FaThumbsUp,
 } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const ScholarshipDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const { user } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [selectedTab, setSelectedTab] = useState("overview");
+  const handleapply = (scholarship) => {
+    // const info = {
+    //   scholarshipId: scholarship._id,
+    //   userId: user.uid,
+    //   userName: user.name,
+    //   userEmail: user.email,
+    //   universityName: scholarship.universityName,
+    //   scholarshipCategory: scholarship.scholarshipCategory,
+    //   degree: scholarship.degree,
+    //   applicationFees: scholarship.applicationFees,
+    //   serviceCharge: scholarship.serviceCharge,
+    // };
+    scholarship.userEmail = user.email;
+    scholarship.userName = user.displayName;
+    scholarship.userId = user.uid;
+    axiosSecure.post("/create-checkout-session", scholarship).then((res) => {
+      window.location.href = res.data.url;
+    });
+  };
 
   const {
     data: responseData = {},
@@ -306,8 +327,8 @@ const ScholarshipDetails = () => {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => navigate(`/checkout/${scholarship._id}`)}
+                  {/* <button
+                    onClick={() => handleapply(scholarship)}
                     disabled={isDeadlinePassed}
                     className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 ${
                       isDeadlinePassed
@@ -318,7 +339,7 @@ const ScholarshipDetails = () => {
                     <FaPaperPlane />
                     {isDeadlinePassed ? "Applications Closed" : "Apply for Scholarship"}
                     <FaChevronRight />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -673,7 +694,7 @@ const ScholarshipDetails = () => {
                     *Service charge covers application review, document verification, and processing support. Tuition fees are paid directly to the university upon acceptance.
                   </p>
                   <button
-                    onClick={() => navigate(`/checkout/${scholarship._id}`)}
+                    onClick={() => handleapply(scholarship)}
                     disabled={isDeadlinePassed}
                     className={`w-full py-4 rounded-xl font-bold text-lg ${
                       isDeadlinePassed
@@ -681,7 +702,7 @@ const ScholarshipDetails = () => {
                         : "bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white hover:shadow-lg hover:shadow-green-500/25"
                     } transition-all duration-300`}
                   >
-                    Proceed to Payment
+                    Apply Now
                   </button>
                 </div>
               </div>

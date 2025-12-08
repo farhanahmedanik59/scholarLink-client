@@ -14,6 +14,8 @@ import AdminRoute from "./AdminRoute";
 import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
 import AddScholarships from "../pages/Dashboard/AddScholarships/AddScholarships";
 import ManageScholarships from "../pages/Dashboard/ManageScholarsips/ManageScholarsips";
+import MyApplications from "../pages/Dashboard/Myaplications/Myaplications";
+import PaymentSuccess from "../components/paymentSuccess/paymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -44,45 +46,47 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    Component: DashboardLayout,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "myProfile",
-        element: (
-          <PrivateRoute>
-            <UserInfo></UserInfo>
-          </PrivateRoute>
-        ),
+        element: <UserInfo></UserInfo>,
       },
       {
         path: "users-management",
         element: (
-          <PrivateRoute>
-            <AdminRoute>
-              <UsersManagement></UsersManagement>
-            </AdminRoute>
-          </PrivateRoute>
+          <AdminRoute>
+            <UsersManagement></UsersManagement>
+          </AdminRoute>
         ),
       },
       {
         path: "addScholarships",
         element: (
-          <PrivateRoute>
-            <AdminRoute>
-              <AddScholarships></AddScholarships>
-            </AdminRoute>
-          </PrivateRoute>
+          <AdminRoute>
+            <AddScholarships></AddScholarships>
+          </AdminRoute>
         ),
       },
       {
         path: "manageScholarships",
         element: (
-          <PrivateRoute>
-            <AdminRoute>
-              <ManageScholarships></ManageScholarships>
-            </AdminRoute>
-          </PrivateRoute>
+          <AdminRoute>
+            <ManageScholarships></ManageScholarships>
+          </AdminRoute>
         ),
+      },
+      {
+        path: "myApplication",
+        Component: MyApplications,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
       },
     ],
   },

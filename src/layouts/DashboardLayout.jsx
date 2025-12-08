@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, NavLink, useNavigate, Link } from "react-router";
 import { FaBars, FaTimes, FaUser, FaGraduationCap, FaTachometerAlt, FaUserCog, FaShieldAlt, FaCog, FaSignOutAlt } from "react-icons/fa";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role } = useRole();
+  console.log(role);
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false); // Drawer toggle for mobile
   const [activeRole, setActiveRole] = useState("admin"); // student, moderator, admin
-
+  useEffect(() => {
+    setActiveRole(role);
+  }, [role]);
   const roleTitles = {
     student: "Student Dashboard",
     moderator: "Moderator Dashboard",
@@ -38,9 +43,6 @@ const DashboardLayout = () => {
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-          <NavLink to="/dashboard" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg `} onClick={() => setSidebarOpen(false)}>
-            <FaTachometerAlt /> Dashboard
-          </NavLink>
           <NavLink
             to="/dashboard/myProfile"
             className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
@@ -51,9 +53,22 @@ const DashboardLayout = () => {
 
           {/* Add more links based on roles */}
           {activeRole === "student" && (
-            <NavLink to="/dashboard/profile" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg `} onClick={() => setSidebarOpen(false)}>
-              <FaUser /> My Profile
-            </NavLink>
+            <>
+              <NavLink
+                to="/dashboard/myApplication"
+                className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FaUserCog /> My Applications
+              </NavLink>
+              <NavLink
+                to="/dashboard/myReviews"
+                className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FaUserCog /> My Reviews
+              </NavLink>
+            </>
           )}
 
           {activeRole === "admin" && (
