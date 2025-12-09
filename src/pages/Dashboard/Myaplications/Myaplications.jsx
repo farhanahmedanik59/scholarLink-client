@@ -149,6 +149,7 @@ const MyApplications = () => {
             <table className="w-full min-w-[1000px]">
               <thead className="bg-gray-900">
                 <tr>
+                  <th>#</th>
                   <th className="p-4 text-left font-semibold">University Name</th>
                   <th className="p-4 text-left font-semibold">University Address</th>
                   <th className="p-4 text-left font-semibold">Feedback</th>
@@ -166,8 +167,11 @@ const MyApplications = () => {
                     </td>
                   </tr>
                 ) : (
-                  applications.map((app) => (
+                  applications.map((app, index) => (
                     <tr key={app._id} className="border-t border-gray-700 hover:bg-gray-750 transition-colors">
+                      <td>
+                        <span className="pl-2"> {index + 1}.</span>
+                      </td>
                       {/* University Name */}
                       <td className="p-4">
                         <p className="font-medium">{app.universityName || "N/A"}</p>
@@ -177,7 +181,7 @@ const MyApplications = () => {
                       <td className="p-4">
                         <div className="flex items-start gap-2">
                           <FaMapMarkerAlt className="text-gray-400 mt-1 flex-shrink-0" />
-                          <p className="text-gray-300 text-sm">{truncateText(app.universityAddress || "Address not provided", 40)}</p>
+                          <p className="text-gray-300 text-sm">{truncateText(app.universityCountry || "Address not provided", 40)}</p>
                         </div>
                       </td>
 

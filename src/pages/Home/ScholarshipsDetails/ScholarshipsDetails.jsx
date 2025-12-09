@@ -48,17 +48,6 @@ const ScholarshipDetails = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedTab, setSelectedTab] = useState("overview");
   const handleapply = (scholarship) => {
-    // const info = {
-    //   scholarshipId: scholarship._id,
-    //   userId: user.uid,
-    //   userName: user.name,
-    //   userEmail: user.email,
-    //   universityName: scholarship.universityName,
-    //   scholarshipCategory: scholarship.scholarshipCategory,
-    //   degree: scholarship.degree,
-    //   applicationFees: scholarship.applicationFees,
-    //   serviceCharge: scholarship.serviceCharge,
-    // };
     scholarship.userEmail = user.email;
     scholarship.userName = user.displayName;
     scholarship.userId = user.uid;

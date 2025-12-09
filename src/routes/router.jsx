@@ -16,6 +16,8 @@ import AddScholarships from "../pages/Dashboard/AddScholarships/AddScholarships"
 import ManageScholarships from "../pages/Dashboard/ManageScholarsips/ManageScholarsips";
 import MyApplications from "../pages/Dashboard/Myaplications/Myaplications";
 import PaymentSuccess from "../components/paymentSuccess/paymentSuccess";
+import PaymentError from "../components/PaymentError/PaymentError";
+import WelcomeDashboard from "../components/DashboardWelcome/WelcomeDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +55,10 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        index: true,
+        Component: WelcomeDashboard,
+      },
+      {
         path: "myProfile",
         element: <UserInfo></UserInfo>,
       },
@@ -84,11 +90,19 @@ export const router = createBrowserRouter([
         path: "myApplication",
         Component: MyApplications,
       },
-      {
-        path: "payment-success",
-        Component: PaymentSuccess,
-      },
     ],
+  },
+  {
+    path: "payment-success",
+    Component: PaymentSuccess,
+  },
+  {
+    path: "payment-error",
+    element: (
+      <PrivateRoute>
+        <PaymentError></PaymentError>
+      </PrivateRoute>
+    ),
   },
   {
     path: "*",
