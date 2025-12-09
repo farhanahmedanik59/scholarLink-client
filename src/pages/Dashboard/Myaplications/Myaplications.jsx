@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaFileAlt, FaEye, FaEdit, FaTrash, FaDollarSign, FaStar, FaTimes, FaPaperPlane, FaMapMarkerAlt } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
+import { number } from "framer-motion";
+import Swal from "sweetalert2";
 
 const MyApplications = () => {
   useEffect(() => {
@@ -39,15 +41,28 @@ const MyApplications = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this application?")) return;
-
-    try {
-      await axiosSecure.delete(`/applications/${id}`);
-      alert("Deleted successfully");
-      refetch();
-    } catch (error) {
-      alert("Delete failed");
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/applications?id=${id}`).then((res) => {
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          }
+        });
+      }
+    });
   };
 
   // Handle payment
@@ -57,22 +72,18 @@ const MyApplications = () => {
     });
   };
 
-  // Handle review submission
-  const onSubmitReview = async (data) => {
-    try {
-      await axiosSecure.post("/reviews", {
-        applicationId: selectedApp._id,
-        rating: data.rating,
-        comment: data.comment,
-      });
-      alert("Review submitted");
-      setSelectedApp(null);
-      setShowReview(false);
-      reset();
-      refetch();
-    } catch (error) {
-      alert("Failed to submit review");
-    }
+  const onSubmitReview = (data) => {
+    console.log(selectedApp);
+    axiosSecure.post("/reviews", {
+      scholarshipId: selectedApp.scholarshipId,
+      universityName: selectedApp.universityName,
+      ratingPoint: parseInt(data.rating),
+      userName: user.displayName,
+      scholarshipName: selectedApp.scholarshipName,
+      reviewComment: data.comment,
+      userImage: user.photoURL,
+      userEmail: user.email,
+    });
   };
 
   // Format date
@@ -381,10 +392,6 @@ const MyApplications = () => {
                   <textarea
                     {...register("comment", {
                       required: "Please write a comment",
-                      minLength: {
-                        value: 10,
-                        message: "Comment should be at least 10 characters",
-                      },
                     })}
                     rows="4"
                     className="w-full p-3 bg-gray-900 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none"

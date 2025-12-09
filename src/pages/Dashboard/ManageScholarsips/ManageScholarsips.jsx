@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaGraduationCap, FaEdit, FaTrash, FaTimes, FaSave } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const ManageScholarships = () => {
   useEffect(() => {
@@ -49,15 +50,26 @@ const ManageScholarships = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Delete this scholarship?")) {
-      try {
-        await axiosSecure.delete(`/scholarships/${id}`);
-        alert("Deleted");
-        refetch();
-      } catch (error) {
-        alert("Delete failed");
-      }
-    }
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     axiosSecure.delete(`/applications?id=${id}`).then((res) => {
+    //       console.log(res.data);
+    //     });
+    //     // Swal.fire({
+    //     //   title: "Deleted!",
+    //     //   text: "Your file has been deleted.",
+    //     //   icon: "success",
+    //     // });
+    //   }
+    // });
   };
 
   const onSubmit = async (formData) => {

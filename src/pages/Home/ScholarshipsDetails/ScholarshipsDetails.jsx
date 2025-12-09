@@ -69,10 +69,7 @@ const ScholarshipDetails = () => {
   });
 
   const scholarship = responseData.scholarship || {};
-  const reviewData = responseData.reviewData || {};
-
-  // Create reviews array from reviewData
-  const reviews = reviewData._id ? [reviewData] : [];
+  const reviews = Array.isArray(responseData.reviewData) ? responseData.reviewData : [];
 
   const calculateDaysRemaining = (deadline) => {
     if (!deadline) return 0;
@@ -122,7 +119,7 @@ const ScholarshipDetails = () => {
     }
 
     if (hasHalfStar) {
-      stars.push(<FaStarHalf key="half" className="text-yellow-400 text-lg" />);
+      stars.push(<FaStarHalfAlt key="half" className="text-yellow-400 text-lg" />);
     }
 
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
@@ -131,6 +128,13 @@ const ScholarshipDetails = () => {
     }
 
     return stars;
+  };
+
+  // Calculate average rating with 1 decimal place
+  const calculateAverageRating = () => {
+    if (reviews.length === 0) return 0;
+    const total = reviews.reduce((acc, review) => acc + (review.ratingPoint || 0), 0);
+    return (total / reviews.length).toFixed(1);
   };
 
   if (isLoading)
@@ -158,10 +162,10 @@ const ScholarshipDetails = () => {
     );
 
   const daysRemaining = calculateDaysRemaining(scholarship.applicationDeadline);
-  const totalCost = scholarship.tuitionFees + scholarship.applicationFees + scholarship.serviceCharge;
   const isDeadlinePassed = daysRemaining === 0;
   const isPartialScholarship = scholarship.scholarshipCategory?.toLowerCase().includes("partial");
   const isDeadlineSoon = daysRemaining > 0 && daysRemaining <= 30;
+  const averageRating = calculateAverageRating();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] py-8 px-4">
@@ -525,7 +529,7 @@ const ScholarshipDetails = () => {
                               <div className="flex flex-col items-end">
                                 <div className="flex items-center gap-2">
                                   <div className="flex items-center gap-1">{renderStars(review.ratingPoint || 0)}</div>
-                                  <span className="text-yellow-400 font-bold text-lg">{review.ratingPoint?.toFixed(1) || "0.0"}</span>
+                                  <span className="text-yellow-400 font-bold text-lg">{(review.ratingPoint || 0).toFixed(1)}</span>
                                 </div>
                                 <div className="mt-2 inline-flex items-center gap-1 bg-blue-900/30 border border-blue-700/30 rounded-full px-3 py-1">
                                   <FaUniversity className="text-blue-400 text-xs" />
@@ -564,7 +568,7 @@ const ScholarshipDetails = () => {
                               <p className="text-gray-300 text-sm">Total Reviews</p>
                             </div>
                             <div className="text-center p-4 bg-gray-800/50 rounded-xl">
-                              <div className="text-3xl font-bold text-yellow-400 mb-1">{reviews.reduce((acc, review) => acc + (review.ratingPoint || 0), 0) / reviews.length || 0}</div>
+                              <div className="text-3xl font-bold text-yellow-400 mb-1">{averageRating}</div>
                               <p className="text-gray-300 text-sm">Average Rating</p>
                             </div>
                             <div className="text-center p-4 bg-gray-800/50 rounded-xl">
@@ -582,7 +586,7 @@ const ScholarshipDetails = () => {
                             <div className="space-y-2">
                               {[5, 4, 3, 2, 1].map((star) => {
                                 const count = reviews.filter((r) => Math.round(r.ratingPoint) === star).length;
-                                const percentage = (count / reviews.length) * 100;
+                                const percentage = reviews.length > 0 ? (count / reviews.length) * 100 : 0;
                                 return (
                                   <div key={star} className="flex items-center gap-3">
                                     <div className="flex items-center gap-1 w-20">
@@ -704,8 +708,8 @@ const ScholarshipDetails = () => {
                   Student Rating
                 </h4>
                 <div className="text-center mb-4">
-                  <div className="text-5xl font-bold text-yellow-400 mb-2">{reviews.reduce((acc, review) => acc + (review.ratingPoint || 0), 0) / reviews.length || 0}</div>
-                  <div className="flex justify-center mb-2">{renderStars(reviews.reduce((acc, review) => acc + (review.ratingPoint || 0), 0) / reviews.length || 0)}</div>
+                  <div className="text-5xl font-bold text-yellow-400 mb-2">{averageRating}</div>
+                  <div className="flex justify-center mb-2">{renderStars(parseFloat(averageRating))}</div>
                   <p className="text-gray-400 text-sm">
                     Based on {reviews.length} review{reviews.length !== 1 ? "s" : ""}
                   </p>
