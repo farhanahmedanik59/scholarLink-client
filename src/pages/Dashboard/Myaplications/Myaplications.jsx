@@ -35,7 +35,7 @@ const MyApplications = () => {
   };
 
   const handleEdit = async (id) => {
-    alert(`Edit application ${id} - This would open edit form`);
+    //
   };
 
   const handleDelete = async (id) => {
@@ -52,8 +52,9 @@ const MyApplications = () => {
 
   // Handle payment
   const handlePay = (application) => {
-    console.log(application);
-    axiosSecure.post(`/create-checkout-session`, application);
+    axiosSecure.post(`/create-checkout-session`, application).then((res) => {
+      window.location.href = res.data.url;
+    });
   };
 
   // Handle review submission
