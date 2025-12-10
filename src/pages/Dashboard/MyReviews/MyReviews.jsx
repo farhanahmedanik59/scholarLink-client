@@ -12,7 +12,6 @@ const MyReviews = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
 
-  // Fetch reviews using TanStack Query
   const {
     data: reviews = [],
     isLoading,
@@ -26,13 +25,11 @@ const MyReviews = () => {
     },
   });
 
-  // Handle edit button click
   const handleEditClick = (review) => {
     setEditingReview(review);
     setShowEditModal(true);
   };
 
-  // Handle delete button click
   const handleDeleteClick = (review) => {
     setReviewToDelete(review);
     setShowDeleteModal(true);

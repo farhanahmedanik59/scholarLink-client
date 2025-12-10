@@ -19,6 +19,8 @@ import PaymentSuccess from "../components/paymentSuccess/paymentSuccess";
 import PaymentError from "../components/PaymentError/PaymentError";
 import WelcomeDashboard from "../components/DashboardWelcome/WelcomeDashboard";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
+import ManageApplications from "../pages/Dashboard/ManageApplications/ManageApplications";
+import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +100,18 @@ export const router = createBrowserRouter([
             <MyReviews></MyReviews>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "ManageApplications",
+        element: (
+          <PrivateRoute>
+            <ManageApplications></ManageApplications>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "AllReviews",
+        Component: AllReviews,
       },
     ],
   },

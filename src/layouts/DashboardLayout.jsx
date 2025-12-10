@@ -22,7 +22,6 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar Drawer */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-56 bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:flex-shrink-0`}
@@ -41,7 +40,6 @@ const DashboardLayout = () => {
           </button>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           <NavLink
             to="/dashboard/myProfile"
@@ -51,7 +49,6 @@ const DashboardLayout = () => {
             <FaUserCog /> My Profile
           </NavLink>
 
-          {/* Add more links based on roles */}
           {activeRole === "student" && (
             <>
               <NavLink
@@ -104,20 +101,34 @@ const DashboardLayout = () => {
               </NavLink>
             </>
           )}
+          {activeRole === "moderator" && (
+            <>
+              <NavLink
+                to="/dashboard/ManageApplications"
+                className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FaUserCog /> Manage Applications
+              </NavLink>
+              <NavLink
+                to="/dashboard/AllReviews"
+                className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FaUserCog /> All Reviews
+              </NavLink>
+            </>
+          )}
 
-          {/* Logout */}
           <button onClick={handleLogout} className="flex items-center gap-3 w-full px-4 py-3 mt-6 text-gray-300 hover:text-white hover:bg-red-600/20 rounded-lg">
             <FaSignOutAlt /> Logout
           </button>
         </nav>
       </aside>
 
-      {/* Overlay for Mobile */}
       {sidebarOpen && <div className="fixed inset-0 z-40 bg-opacity-50 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Topbar */}
         <header className="flex items-center justify-between px-6 py-4 bg-[#0F1A2C]  shadow-sm">
           <button className="text-gray-600 lg:hidden" onClick={() => setSidebarOpen(true)}>
             <FaBars className="w-6 h-6" />
@@ -125,7 +136,6 @@ const DashboardLayout = () => {
           <h1 className="text-xl text-white font-bold">{roleTitles[activeRole]}</h1>
         </header>
 
-        {/* Page Content */}
         <main className="flex-1 overflow-y-auto ">
           <Outlet />
         </main>
