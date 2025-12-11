@@ -21,6 +21,7 @@ import {
 } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const ManageApplications = () => {
   const axiosSecure = useAxiosSecure();
@@ -31,7 +32,6 @@ const ManageApplications = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [feedbackText, setFeedbackText] = useState("");
 
-  // Fetch all applications
   const {
     data: applications = [],
     isLoading,
@@ -45,7 +45,6 @@ const ManageApplications = () => {
     },
   });
 
-  // Filter applications
   const filteredApplications = applications.filter((app) => {
     const matchesSearch =
       app.userName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -71,38 +70,70 @@ const ManageApplications = () => {
 
   const handleStatusUpdate = async (applicationId, newStatus) => {
     try {
-      await axiosSecure.patch(`/applications/${applicationId}`, {
-        applicationStatus: newStatus,
-      });
-      refetch();
+      await axiosSecure
+        .patch(`/applications/${applicationId}`, {
+          applicationStatus: newStatus,
+        })
+        .then((res) => {
+          if (res.data.modifiedCount) {
+            Swal.fire({
+              title: "Updated!",
+              text: " status has been updated.",
+              icon: "success",
+            });
+          }
+          refetch();
+        });
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
 
   const handleRejectApplication = async (applicationId) => {
-    if (window.confirm("Are you sure you want to reject this application?")) {
-      try {
-        await axiosSecure.patch(`/applications/${applicationId}`, {
-          applicationStatus: "rejected",
-        });
-        refetch();
-      } catch (error) {
-        console.error("Error rejecting application:", error);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, !",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .patch(`/applications/${applicationId}`, {
+            applicationStatus: "rejected",
+          })
+          .then((res) => {
+            if (res.data.modifiedCount) {
+              refetch();
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          });
       }
-    }
+    });
   };
 
   const handleSubmitFeedback = async () => {
     if (!selectedApplication) return;
 
     try {
-      await axiosSecure.patch(`/applications/${selectedApplication._id}`, {
-        feedback: feedbackText,
-      });
-      setShowFeedbackModal(false);
-      setFeedbackText("");
-      refetch();
+      await axiosSecure
+        .patch(`/applications/${selectedApplication._id}`, {
+          feedback: feedbackText,
+        })
+        .then((res) => {
+          if (res.data.modifiedCount) {
+            console.log(res.data);
+            setShowFeedbackModal(false);
+            setFeedbackText("");
+            refetch();
+          }
+        });
     } catch (error) {
       console.error("Error submitting feedback:", error);
     }

@@ -12,7 +12,6 @@ const AllReviews = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
 
-  // Fetch all reviews
   const {
     data: reviews = [],
     isLoading,
@@ -48,7 +47,6 @@ const AllReviews = () => {
     return matchesSearch && matchesUniversity && matchesRating;
   });
 
- 
   const handleDeleteConfirm = async (review) => {
     Swal.fire({
       title: "Are you sure?",
@@ -81,7 +79,6 @@ const AllReviews = () => {
     }
   };
 
- 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -94,7 +91,6 @@ const AllReviews = () => {
     });
   };
 
- 
   const renderStars = (rating) => {
     return (
       <div className="flex">
@@ -104,7 +100,6 @@ const AllReviews = () => {
       </div>
     );
   };
-
 
   const getRatingColor = (rating) => {
     if (rating >= 4) return "text-green-400";
@@ -140,13 +135,11 @@ const AllReviews = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-7xl mx-auto">
-       
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">All Reviews</h1>
           <p className="text-gray-400">Total: {reviews.length} reviews from students</p>
         </div>
 
-       
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-gray-800 rounded-xl border border-gray-700 p-4">
             <div className="flex items-center justify-between">
@@ -197,10 +190,8 @@ const AllReviews = () => {
           </div>
         </div>
 
-        
         <div className="bg-gray-800 rounded-xl border border-gray-700 p-4 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
-           
             <div className="flex-1">
               <div className="relative">
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -214,7 +205,6 @@ const AllReviews = () => {
               </div>
             </div>
 
-          
             <div className="flex gap-2">
               <div className="flex items-center gap-2">
                 <FaUniversity className="text-gray-400" />
@@ -262,7 +252,6 @@ const AllReviews = () => {
           </div>
         </div>
 
-       
         <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -280,7 +269,6 @@ const AllReviews = () => {
               <tbody>
                 {filteredReviews.map((review) => (
                   <tr key={review._id} className="border-t border-gray-700 hover:bg-gray-900/50">
-                   
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-blue-900/30 border border-blue-700/50 flex items-center justify-center">
@@ -290,7 +278,6 @@ const AllReviews = () => {
                       </div>
                     </td>
 
-                    
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <FaEnvelope className="text-blue-400" />
@@ -298,7 +285,6 @@ const AllReviews = () => {
                       </div>
                     </td>
 
-                   
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <FaUniversity className="text-blue-400" />
@@ -306,7 +292,6 @@ const AllReviews = () => {
                       </div>
                     </td>
 
-                    
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <FaComment className="text-blue-400" />
@@ -314,7 +299,6 @@ const AllReviews = () => {
                       </div>
                     </td>
 
-               
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <FaCalendarAlt className="text-blue-400" />
@@ -322,7 +306,6 @@ const AllReviews = () => {
                       </div>
                     </td>
 
-                  
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         {renderStars(review.ratingPoint)}
@@ -330,7 +313,6 @@ const AllReviews = () => {
                       </div>
                     </td>
 
-                    {
                     <td className="py-3 px-4">
                       <button onClick={() => handleDeleteConfirm(review)} className="p-2 bg-red-600 hover:bg-red-700 rounded-lg text-white transition-colors" title="Delete Review">
                         <FaTrash />
@@ -343,7 +325,6 @@ const AllReviews = () => {
           </div>
         </div>
 
-        
         {filteredReviews.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-400 text-5xl mb-4">💬</div>
@@ -352,12 +333,10 @@ const AllReviews = () => {
           </div>
         )}
 
-       
         <div className="mt-6 text-center text-gray-500 text-sm">
           Showing {filteredReviews.length} of {reviews.length} reviews
         </div>
 
-       
         {showDeleteModal && reviewToDelete && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 w-full max-w-md">
