@@ -21,6 +21,7 @@ import WelcomeDashboard from "../components/DashboardWelcome/WelcomeDashboard";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 import ManageApplications from "../pages/Dashboard/ManageApplications/ManageApplications";
 import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
+import Analytics from "../pages/Dashboard/Analytics/Analytics";
 
 export const router = createBrowserRouter([
   {
@@ -112,6 +113,14 @@ export const router = createBrowserRouter([
       {
         path: "AllReviews",
         Component: AllReviews,
+      },
+      {
+        path: "analytics",
+        element: (
+          <AdminRoute>
+            <Analytics></Analytics>
+          </AdminRoute>
+        ),
       },
     ],
   },
