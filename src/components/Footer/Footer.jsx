@@ -24,7 +24,9 @@ const Footer = () => {
                 <span className="text-xl font-bold text-white">SL</span>
               </div>
               <div>
-                <h2 className="text-2xl font-bold tracking-tight">ScholarLink</h2>
+                <h2 className="text-2xl font-bold tracking-tight">
+                  Scholar<spam className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Stream</spam>
+                </h2>
                 <p className="text-gray-400 text-sm">Connecting Students to Opportunities</p>
               </div>
             </div>

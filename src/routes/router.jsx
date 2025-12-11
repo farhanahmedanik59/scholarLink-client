@@ -126,7 +126,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "payment-success",
-    Component: PaymentSuccess,
+    element: (
+      <PrivateRoute>
+        <PaymentSuccess></PaymentSuccess>
+      </PrivateRoute>
+    ),
   },
   {
     path: "payment-error",

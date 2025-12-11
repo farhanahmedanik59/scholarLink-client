@@ -65,7 +65,6 @@ const MyApplications = () => {
     });
   };
 
-  // Handle payment
   const handlePay = (application) => {
     axiosSecure.post(`/create-checkout-session`, application).then((res) => {
       window.location.href = res.data.url;
@@ -73,20 +72,30 @@ const MyApplications = () => {
   };
 
   const onSubmitReview = (data) => {
-    console.log(selectedApp);
-    axiosSecure.post("/reviews", {
-      scholarshipId: selectedApp.scholarshipId,
-      universityName: selectedApp.universityName,
-      ratingPoint: parseInt(data.rating),
-      userName: user.displayName,
-      scholarshipName: selectedApp.scholarshipName,
-      reviewComment: data.comment,
-      userImage: user.photoURL,
-      userEmail: user.email,
-    });
+    axiosSecure
+      .post("/reviews", {
+        scholarshipId: selectedApp.scholarshipId,
+        universityName: selectedApp.universityName,
+        ratingPoint: parseInt(data.rating),
+        userName: user.displayName,
+        scholarshipName: selectedApp.scholarshipName,
+        reviewComment: data.comment,
+        userImage: user.photoURL,
+        userEmail: user.email,
+      })
+      .then((res) => {
+        if (res.data.insertedId) {
+          console.log(res.data);
+          Swal.fire({
+            title: "Review Added",
+            icon: "success",
+          });
+          setShowReview(false);
+          reset();
+        }
+      });
   };
 
-  // Format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -95,7 +104,6 @@ const MyApplications = () => {
     });
   };
 
-  // Get status color
   const getStatusColor = (status) => {
     const colors = {
       pending: "bg-yellow-900/30 text-yellow-300",
@@ -107,13 +115,11 @@ const MyApplications = () => {
     return colors[status] || "bg-gray-700/30 text-gray-300";
   };
 
-  // Truncate text for table display
   const truncateText = (text, maxLength = 30) => {
     if (!text) return "N/A";
     return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
   };
 
-  // Loading state
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -125,7 +131,6 @@ const MyApplications = () => {
     );
   }
 
-  // Error state
   if (isError) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
@@ -142,7 +147,6 @@ const MyApplications = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-6">
             <div className="p-4 bg-blue-600 rounded-xl">
@@ -155,7 +159,6 @@ const MyApplications = () => {
           </div>
         </div>
 
-        {/* Applications Table */}
         <div className="bg-gray-800 rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1000px]">
@@ -184,12 +187,11 @@ const MyApplications = () => {
                       <td>
                         <span className="pl-2"> {index + 1}.</span>
                       </td>
-                      {/* University Name */}
+
                       <td className="p-4">
                         <p className="font-medium">{app.universityName || "N/A"}</p>
                       </td>
 
-                      {/* University Address */}
                       <td className="p-4">
                         <div className="flex items-start gap-2">
                           <FaMapMarkerAlt className="text-gray-400 mt-1 flex-shrink-0" />
@@ -197,58 +199,48 @@ const MyApplications = () => {
                         </div>
                       </td>
 
-                      {/* Feedback */}
                       <td className="p-4">
                         <p className="text-sm text-gray-300">{truncateText(app.feedback || "No feedback yet", 30)}</p>
                       </td>
 
-                      {/* Subject Category */}
                       <td className="p-4">
                         <span className="px-2 py-1 bg-gray-700/50 rounded text-sm">{app.subjectCategory || "Science"}</span>
                       </td>
 
-                      {/* Application Fees */}
                       <td className="p-4">
                         <p className="font-medium">${app.applicationFees || 0}</p>
                       </td>
 
-                      {/* Application Status */}
                       <td className="p-4">
                         <div className="mt-1">
                           <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(app.applicationStatus)}`}>{app.applicationStatus || "pending"}</span>
                         </div>
                       </td>
 
-                      {/* Actions */}
                       <td className="p-4">
                         <div className="flex flex-wrap gap-2">
-                          {/* Details Button - Always visible */}
                           <button onClick={() => handleViewDetails(app)} className="p-2 bg-blue-900/30 rounded-lg hover:bg-blue-900/50 transition-colors" title="View Details">
                             <FaEye className="text-blue-300" />
                           </button>
 
-                          {/* Edit Button - Only for pending */}
                           {app.applicationStatus === "pending" && (
                             <button onClick={() => handleEdit(app._id)} className="p-2 bg-yellow-900/30 rounded-lg hover:bg-yellow-900/50 transition-colors" title="Edit Application">
                               <FaEdit className="text-yellow-300" />
                             </button>
                           )}
 
-                          {/* Pay Button - Only for pending & unpaid */}
                           {app.applicationStatus === "pending" && app.paymentStatus === "unpaid" && (
                             <button onClick={() => handlePay(app)} className="p-2 bg-green-900/30 rounded-lg hover:bg-green-900/50 transition-colors" title="Pay Now">
                               <FaDollarSign className="text-green-300" />
                             </button>
                           )}
 
-                          {/* Delete Button - Only for pending */}
                           {app.applicationStatus === "pending" && (
                             <button onClick={() => handleDelete(app._id)} className="p-2 bg-red-900/30 rounded-lg hover:bg-red-900/50 transition-colors" title="Delete Application">
                               <FaTrash className="text-red-300" />
                             </button>
                           )}
 
-                          {/* Add Review Button - Only for completed */}
                           {app.applicationStatus === "completed" && (
                             <button
                               onClick={() => {
@@ -271,11 +263,9 @@ const MyApplications = () => {
           </div>
         </div>
 
-        {/* Details Modal */}
         {selectedApp && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
             <div className="bg-gray-800 rounded-xl w-full max-w-4xl border border-gray-700 max-h-[90vh] overflow-y-auto">
-              {/* Modal Header */}
               <div className="sticky top-0 bg-gray-800 flex justify-between items-center p-6 border-b border-gray-700">
                 <h2 className="text-2xl font-bold">Application Details</h2>
                 <button onClick={() => setSelectedApp(null)} className="p-2 hover:bg-gray-700 rounded-lg transition-colors">
@@ -283,7 +273,6 @@ const MyApplications = () => {
                 </button>
               </div>
 
-              {/* Modal Content */}
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <DetailItem label="University Name" value={selectedApp.universityName} />
@@ -357,7 +346,6 @@ const MyApplications = () => {
           </div>
         )}
 
-        {/* Review Modal */}
         {showReview && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
             <div className="bg-gray-800 rounded-xl w-full max-w-md border border-gray-700">
@@ -424,7 +412,6 @@ const MyApplications = () => {
   );
 };
 
-// Reusable Detail Item Component
 const DetailItem = ({ label, value, isMultiline = false }) => (
   <div>
     <p className="text-gray-400 text-sm mb-2 font-medium">{label}</p>

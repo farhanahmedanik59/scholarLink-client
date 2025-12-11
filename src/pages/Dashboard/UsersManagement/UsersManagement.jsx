@@ -27,7 +27,6 @@ const UsersManagement = () => {
     },
   });
 
-  // DEBUG: Log users to see what roles they have
   useEffect(() => {
     if (users.length > 0) {
       console.log(
@@ -37,12 +36,9 @@ const UsersManagement = () => {
     }
   }, [users]);
 
-  // Get unique roles from users
   const availableRoles = ["All", "student", "moderator", "admin"];
 
-  // Filter users - SIMPLE VERSION
   const filteredUsers = users.filter((user) => {
-    // Search filter
     if (searchQuery) {
       const searchLower = searchQuery.toLowerCase();
       const nameMatch = user.name?.toLowerCase().includes(searchLower);
@@ -52,7 +48,6 @@ const UsersManagement = () => {
 
     // Role filter
     if (selectedRole !== "All") {
-      // Normalize both values to lowercase for comparison
       const userRole = user.role?.toLowerCase() || "student";
       const filterRole = selectedRole.toLowerCase();
       if (userRole !== filterRole) return false;
@@ -67,16 +62,28 @@ const UsersManagement = () => {
   };
 
   const handleDeleteUser = async (userId) => {
-    if (window.confirm("Delete this user?")) {
-      try {
-        await axiosSecure.delete(`/users/${userId}`);
-        alert("User deleted");
-        window.location.reload();
-      } catch (error) {
-        console.error("Delete failed:", error);
-        alert("Failed to delete user");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/users/${userId}`).then((res) => {
+          if (res.data.deletedCount) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "User has been Deleted.",
+              icon: "success",
+            });
+          }
+        });
       }
-    }
+    });
   };
 
   const handleUpdateRole = async (userEmail, newRole) => {

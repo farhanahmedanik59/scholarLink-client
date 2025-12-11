@@ -48,7 +48,6 @@ const AnalyticsDashboard = () => {
 
   const axiosSecure = useAxiosSecure();
 
-  // Fetch basic analytics data
   const {
     data: analyticsData,
     isLoading,
@@ -62,7 +61,6 @@ const AnalyticsDashboard = () => {
     },
   });
 
-  // Fetch chart data
   const { data: chartData } = useQuery({
     queryKey: ["analyticsCharts"],
     queryFn: async () => {
@@ -85,11 +83,9 @@ const AnalyticsDashboard = () => {
   const data = analyticsData || {};
   const charts = chartData || {};
 
-  // Enhanced chart data with gradients
   const applicationsByUniversity = (charts.applicationsByUniversity || []).slice(0, 7);
   const applicationsByCategory = charts.applicationsByCategory || [];
 
-  // Enhanced colors for dark theme
   const CHART_COLORS = {
     primary: {
       blue: "#3B82F6",
@@ -110,7 +106,6 @@ const AnalyticsDashboard = () => {
     },
   };
 
-  // Custom tooltip for dark theme
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -129,7 +124,6 @@ const AnalyticsDashboard = () => {
     return null;
   };
 
-  // Statistics Cards with improved design
   const statCards = [
     {
       title: "Total Users",
@@ -173,7 +167,6 @@ const AnalyticsDashboard = () => {
     },
   ];
 
-  // Radial chart data for completion rate
   const radialData = [
     {
       name: "Completion",
@@ -210,11 +203,9 @@ const AnalyticsDashboard = () => {
             </button>
           </div>
 
-          {/* Stats Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             {statCards.map((stat, index) => (
               <div key={index} className={`relative bg-gradient-to-br ${stat.color} rounded-2xl p-6 border ${stat.borderColor} hover:scale-[1.02] transition-all duration-300 group overflow-hidden`}>
-                {/* Background pattern */}
                 <div className="absolute inset-0 opacity-5">
                   <div className="absolute -top-10 -right-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
                 </div>
@@ -236,11 +227,8 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
-          {/* Applications by University - Enhanced Bar Chart */}
           <div className="relative bg-gradient-to-br from-gray-900/60 to-gray-800/40 rounded-2xl border border-gray-700/30 overflow-hidden group">
-            {/* Chart header with glow effect */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600"></div>
             <div className="p-6">
               <div className="flex items-center justify-between mb-8">
@@ -299,7 +287,6 @@ const AnalyticsDashboard = () => {
             </div>
           </div>
 
-          {/* Applications by Category - Enhanced Pie Chart */}
           <div className="relative bg-gradient-to-br from-gray-900/60 to-gray-800/40 rounded-2xl border border-gray-700/30 overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600"></div>
             <div className="p-6">
@@ -373,9 +360,7 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        {/* Additional Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-          {/* Monthly Trend - Area Chart */}
           <div className="lg:col-span-2 relative bg-gradient-to-br from-gray-900/60 to-gray-800/40 rounded-2xl border border-gray-700/30 overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-600 via-emerald-500 to-green-600"></div>
             <div className="p-6">
@@ -428,7 +413,6 @@ const AnalyticsDashboard = () => {
             </div>
           </div>
 
-          {/* Completion Rate - Radial Chart */}
           <div className="relative bg-gradient-to-br from-gray-900/60 to-gray-800/40 rounded-2xl border border-gray-700/30 overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-600 via-blue-500 to-cyan-600"></div>
             <div className="p-6">
@@ -468,7 +452,6 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        {/* Performance Indicators */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-gradient-to-br from-gray-900/40 to-gray-800/20 rounded-xl p-5 border border-gray-700/20">
             <div className="flex items-center gap-3 mb-3">
@@ -514,7 +497,6 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="text-center text-gray-500 text-sm pt-8 border-t border-gray-800/30">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2">
             <span>Data updates automatically • Last refresh: {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>

@@ -5,6 +5,7 @@ import Faq from "../Faq/Faq";
 import SuccessStories from "../SuccessStory/SuccessStory";
 
 const Home = () => {
+  window.scrollTo(0, 0);
   return (
     <div>
       <Hero></Hero>

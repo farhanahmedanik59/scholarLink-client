@@ -120,7 +120,7 @@ const PaymentError = () => {
             </button>
 
             <button
-              onClick={() => navigate("/my-applications")}
+              onClick={() => navigate("/dashboard/myApplication")}
               className="w-full bg-blue-900/30 hover:bg-blue-900/50 text-blue-300 py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 border border-blue-800/30"
             >
               <FaFileAlt />

@@ -47,7 +47,7 @@ const Navbar = () => {
             </div>
             <div>
               <span className="text-xl font-bold text-white">Scholar</span>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Hub</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Stream</span>
             </div>
           </Link>
 

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { FaStar, FaEdit, FaTrash, FaCalendarAlt, FaUniversity, FaAward, FaRegStar } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaStar, FaEdit, FaTrash, FaCalendarAlt, FaUniversity, FaAward } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const MyReviews = () => {
   const { user } = useAuth();
@@ -11,6 +12,9 @@ const MyReviews = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
+  const [editRating, setEditRating] = useState(0);
+  const [editComment, setEditComment] = useState("");
+  const [hoverRating, setHoverRating] = useState(0);
 
   const {
     data: reviews = [],
@@ -27,6 +31,8 @@ const MyReviews = () => {
 
   const handleEditClick = (review) => {
     setEditingReview(review);
+    setEditRating(review.ratingPoint || 0);
+    setEditComment(review.reviewComment || "");
     setShowEditModal(true);
   };
 
@@ -35,18 +41,82 @@ const MyReviews = () => {
     setShowDeleteModal(true);
   };
 
-  // Handle edit form submit
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    // Add edit functionality here
+
+    if (!editRating || editRating < 1) {
+      Swal.fire({
+        title: "Rating Required!",
+        text: "Please select a rating (1-5 stars)",
+        icon: "warning",
+        confirmButtonColor: "#3B82F6",
+      });
+      return;
+    }
+
+    if (!editComment.trim()) {
+      Swal.fire({
+        title: "Comment Required!",
+        text: "Please write a review comment",
+        icon: "warning",
+        confirmButtonColor: "#3B82F6",
+      });
+      return;
+    }
+
+    console.log(editRating, editComment);
+    try {
+      const updatedReview = {
+        ratingPoint: editRating,
+        reviewComment: editComment.trim(),
+      };
+
+      const response = await axiosSecure.patch(`/reviews/${editingReview._id}`, updatedReview);
+
+      if (response.data.modifiedCount > 0) {
+        Swal.fire({
+          title: "Success!",
+          text: "Review updated successfully",
+          icon: "success",
+          confirmButtonColor: "#3B82F6",
+        });
+        setShowEditModal(false);
+        refetch();
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to update review",
+        icon: "error",
+        confirmButtonColor: "#3B82F6",
+      });
+    }
   };
 
-  // Handle delete confirmation
   const handleDeleteConfirm = async () => {
-    // Add delete functionality here
+    try {
+      const response = await axiosSecure.delete(`/all/reviews/${reviewToDelete._id}`);
+
+      if (response.data.deletedCount > 0) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Review deleted successfully",
+          icon: "success",
+          confirmButtonColor: "#3B82F6",
+        });
+        setShowDeleteModal(false);
+        refetch();
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to delete review",
+        icon: "error",
+        confirmButtonColor: "#3B82F6",
+      });
+    }
   };
 
-  // Format date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -56,13 +126,34 @@ const MyReviews = () => {
     });
   };
 
-  // Render star rating
   const renderStars = (rating) => {
     return (
       <div className="flex">
         {[...Array(5)].map((_, index) => (
           <FaStar key={index} className={`text-sm ${index < rating ? "text-yellow-400" : "text-gray-600"}`} />
         ))}
+      </div>
+    );
+  };
+
+  const renderEditStars = () => {
+    return (
+      <div className="flex gap-1">
+        {[...Array(5)].map((_, index) => {
+          const starValue = index + 1;
+          return (
+            <button
+              type="button"
+              key={index}
+              className="text-2xl transition-transform hover:scale-110"
+              onClick={() => setEditRating(starValue)}
+              onMouseEnter={() => setHoverRating(starValue)}
+              onMouseLeave={() => setHoverRating(0)}
+            >
+              <FaStar className={`${starValue <= (hoverRating || editRating) ? "text-yellow-400" : "text-gray-600"}`} />
+            </button>
+          );
+        })}
       </div>
     );
   };
@@ -113,7 +204,6 @@ const MyReviews = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-6xl mx-auto mt-8">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">My Reviews</h1>
           <p className="text-gray-400">
@@ -121,7 +211,6 @@ const MyReviews = () => {
           </p>
         </div>
 
-        {/* Reviews Table */}
         <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -182,7 +271,6 @@ const MyReviews = () => {
           </div>
         </div>
 
-        {/* Edit Review Modal */}
         {showEditModal && editingReview && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 w-full max-w-md">
@@ -190,17 +278,12 @@ const MyReviews = () => {
               <form onSubmit={handleEditSubmit}>
                 <div className="mb-4">
                   <label className="block text-gray-300 mb-2">Rating</label>
-                  <div className="flex gap-2">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button type="button" key={star} className="text-2xl">
-                        <FaStar className="text-yellow-400" />
-                      </button>
-                    ))}
-                  </div>
+                  {renderEditStars()}
+                  <div className="text-gray-400 text-sm mt-2">Selected: {editRating} / 5 stars</div>
                 </div>
                 <div className="mb-6">
                   <label className="block text-gray-300 mb-2">Review Comment</label>
-                  <textarea className="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white" rows="4" defaultValue={editingReview.reviewComment} />
+                  <textarea className="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white" rows="4" onChange={(e) => setEditComment(e.target.value)} />
                 </div>
                 <div className="flex gap-3">
                   <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors">
@@ -215,7 +298,6 @@ const MyReviews = () => {
           </div>
         )}
 
-        {/* Delete Confirmation Modal */}
         {showDeleteModal && reviewToDelete && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 w-full max-w-md">
@@ -238,7 +320,6 @@ const MyReviews = () => {
           </div>
         )}
 
-        {/* Summary */}
         <div className="mt-6 text-center">
           <p className="text-gray-500 text-sm">
             Showing {reviews.length} review{reviews.length !== 1 ? "s" : ""}
