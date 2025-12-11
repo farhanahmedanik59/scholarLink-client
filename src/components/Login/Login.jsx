@@ -52,9 +52,7 @@ const Login = () => {
           photoURL: user.photoURL,
         };
         axiosSecure.post("/user/auth", userInfo).then((res) => {
-          if (res.data.insertedId) {
-            navigate("/");
-          }
+          navigate("/");
         });
       }
     });

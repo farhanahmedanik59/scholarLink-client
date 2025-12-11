@@ -11,6 +11,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const { registerUser } = useAuth();
   const { googleAuth } = useAuth();
 
   const {
@@ -23,7 +24,6 @@ const Register = () => {
 
   const password = watch("password", "");
 
-  // Password validation function
   const validatePassword = (value) => {
     if (!value) return "Password is required";
     if (value.length < 6) {
@@ -46,8 +46,20 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-
-    console.log("Registration data:", data);
+    registerUser(data.email, data.password).then((userCred) => {
+      if (userCred.user) {
+        const user = userCred.user;
+        const userInfo = {
+          name: data.name,
+          email: user.email,
+          photoURL: data.photoURL,
+        };
+        axiosSecure.post("/user/auth", userInfo).then((res) => {
+          setIsLoading(false);
+          navigate("/");
+        });
+      }
+    });
   };
 
   const handleGoogleRegister = () => {
@@ -61,9 +73,7 @@ const Register = () => {
           photoURL: user.photoURL,
         };
         axiosSecure.post("/user/auth", userInfo).then((res) => {
-          if (res.data.insertedId) {
-            navigate("/");
-          }
+          navigate("/");
         });
       }
     });
