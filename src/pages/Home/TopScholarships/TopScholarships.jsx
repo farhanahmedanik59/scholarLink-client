@@ -39,7 +39,6 @@ const TopScholarships = () => {
       </div>
     );
 
-  // Function to format date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -49,7 +48,6 @@ const TopScholarships = () => {
     });
   };
 
-  // Function to calculate days remaining
   const calculateDaysRemaining = (deadline) => {
     const deadlineDate = new Date(deadline);
     const today = new Date();
@@ -72,7 +70,6 @@ const TopScholarships = () => {
           <p className="text-gray-300 text-lg max-w-3xl mx-auto">Discover fully funded opportunities from leading universities worldwide</p>
         </div>
 
-        {/* Scholarship Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {scholarships.map((sch) => {
             const daysRemaining = calculateDaysRemaining(sch.applicationDeadline);
@@ -87,7 +84,6 @@ const TopScholarships = () => {
                 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/20
                 transition-all duration-300 hover:-translate-y-1"
               >
-                {/* University Image with Overlay */}
                 <div className="relative h-48 w-full overflow-hidden">
                   {sch.universityImage ? (
                     <>
@@ -104,16 +100,14 @@ const TopScholarships = () => {
                           `;
                         }}
                       />
-                      {/* Gradient Overlay */}
+
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent"></div>
 
-                      {/* World Rank Badge */}
                       <div className="absolute top-4 left-4 bg-gradient-to-r from-blue-900/90 to-cyan-900/90 backdrop-blur-sm border border-blue-700/50 rounded-full px-3 py-1 flex items-center gap-1">
                         <FaAward className="text-yellow-400 text-xs" />
                         <span className="text-white text-xs font-medium">#{sch.universityWorldRank}</span>
                       </div>
 
-                      {/* Scholarship Category Badge */}
                       <div
                         className={`absolute top-4 right-4 backdrop-blur-sm border rounded-full px-3 py-1 ${
                           isFullFund ? "bg-gradient-to-r from-green-900/90 to-emerald-900/90 border-green-700/50" : "bg-gradient-to-r from-amber-900/90 to-orange-900/90 border-amber-700/50"
@@ -122,7 +116,6 @@ const TopScholarships = () => {
                         <span className={`text-xs font-medium ${isFullFund ? "text-green-300" : "text-amber-300"}`}>{sch.scholarshipCategory}</span>
                       </div>
 
-                      {/* University Name Overlay */}
                       <div className="absolute bottom-4 left-4 right-4">
                         <h3 className="text-xl font-bold text-white truncate">{sch.scholarshipName}</h3>
                         <div className="flex items-center gap-1 text-gray-300 text-sm mt-1">
@@ -138,9 +131,7 @@ const TopScholarships = () => {
                   )}
                 </div>
 
-                {/* Scholarship Details */}
                 <div className="p-6">
-                  {/* Location & Deadline */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 text-gray-400 text-sm">
                       <FaMapMarkerAlt className="text-blue-400" />
@@ -154,7 +145,6 @@ const TopScholarships = () => {
                     </div>
                   </div>
 
-                  {/* Degree & Subject */}
                   <div className="grid grid-cols-2 gap-3 mb-4">
                     <div className="bg-gray-800/30 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
@@ -173,7 +163,6 @@ const TopScholarships = () => {
                     </div>
                   </div>
 
-                  {/* Fees Information */}
                   <div className="bg-gray-800/20 rounded-xl p-4 border border-gray-700/50 mb-4">
                     <h4 className="text-gray-300 text-sm font-medium mb-2 flex items-center gap-2">
                       <FaDollarSign className="text-green-400" />
@@ -189,14 +178,6 @@ const TopScholarships = () => {
                         <p className="text-white font-semibold">${sch.applicationFees}</p>
                       </div>
                     </div>
-                    {isDeadlineSoon && daysRemaining > 0 && (
-                      <div className="mt-3 pt-3 border-t border-gray-700/50">
-                        <div className="flex items-center justify-between">
-                          <span className="text-amber-300 text-sm">Deadline in</span>
-                          <span className="text-amber-400 font-bold">{daysRemaining} days</span>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* CTA Button */}
@@ -216,10 +197,9 @@ const TopScholarships = () => {
           })}
         </div>
 
-        {/* View All Button */}
         <div className="text-center mt-12">
           <Link
-            to="/scholarships"
+            to="/Allscholarships"
             className="inline-flex items-center gap-2 px-8 py-3 bg-gray-800/50 
             hover:bg-gray-700/50 text-white font-medium rounded-xl 
             border border-gray-700 hover:border-gray-600 transition-all duration-300"

@@ -165,7 +165,7 @@ const Hero = () => {
                       <motion.span animate={{ rotate: isHovered ? 90 : 0 }} transition={{ type: "spring", stiffness: 200 }}>
                         <FiArrowRight className="text-base lg:text-xl" />
                       </motion.span>
-                      <span className="text-sm lg:text-base">Explore Opportunities</span>
+                      <span className="text-sm lg:text-base">Search Scholarships</span>
                     </button>
                   </div>
                 </div>

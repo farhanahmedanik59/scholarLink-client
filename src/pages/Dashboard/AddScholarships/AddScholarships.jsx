@@ -20,7 +20,6 @@ const AddScholarships = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Convert numbers
       const scholarshipData = {
         ...data,
         universityWorldRank: Number(data.universityWorldRank),
