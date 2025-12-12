@@ -82,7 +82,6 @@ const Register = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0F1A2C] via-[#1A2B4D] to-[#2C3E50] py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Back to Home */}
         <div className="mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors group">
             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
@@ -91,7 +90,6 @@ const Register = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
-          {/* Left Side - Welcome Section */}
           <div className="lg:w-1/2 text-center lg:text-left">
             <div className="max-w-lg mx-auto lg:mx-0">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-600 to-emerald-500 rounded-2xl mb-6">
@@ -121,14 +119,12 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Right Side - Registration Form */}
           <div className="lg:w-1/2 max-w-md w-full">
             <div className="bg-gray-900/60 backdrop-blur-xl border border-gray-700 rounded-2xl p-8 shadow-2xl">
               <h2 className="text-2xl font-bold text-white text-center mb-2">Create Your Account</h2>
               <p className="text-gray-400 text-center mb-8">Join our community of scholars</p>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Name Field */}
                 <div className="space-y-2">
                   <label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-gray-300">
                     <FaUser className="text-green-400" />
@@ -154,7 +150,6 @@ const Register = () => {
                   </div>
                 </div>
 
-                {/* Email Field */}
                 <div className="space-y-2">
                   <label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-gray-300">
                     <FaEnvelope className="text-green-400" />
@@ -180,7 +175,6 @@ const Register = () => {
                   </div>
                 </div>
 
-                {/* Photo URL Field (Optional) */}
                 <div className="space-y-2">
                   <label htmlFor="photoURL" className="flex items-center gap-2 text-sm font-medium text-gray-300">
                     <FaImage className="text-green-400" />
@@ -201,7 +195,6 @@ const Register = () => {
                   <p className="text-gray-400 text-xs">Leave blank to use default avatar</p>
                 </div>
 
-                {/* Password Field with validation */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-gray-300">
@@ -238,7 +231,6 @@ const Register = () => {
                     {errors.password && <p className="mt-1 text-sm text-red-400 flex items-center gap-1">⚠️ {errors.password.message}</p>}
                   </div>
 
-                  {/* Password Requirements */}
                   <div className="bg-gray-800/30 border border-gray-700/50 rounded-lg p-4 mt-2">
                     <h4 className="text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
                       <FaShieldAlt className="text-green-400" />
@@ -269,7 +261,6 @@ const Register = () => {
                   </div>
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -293,7 +284,6 @@ const Register = () => {
                 </button>
               </form>
 
-              {/* Divider */}
               <div className="my-8">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
@@ -305,7 +295,6 @@ const Register = () => {
                 </div>
               </div>
 
-              {/* Google Register Button */}
               <button
                 onClick={handleGoogleRegister}
                 className="w-full flex items-center justify-center gap-3 py-3 bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 font-medium rounded-xl transition-all duration-300 hover:shadow-md"
@@ -321,7 +310,6 @@ const Register = () => {
                 <span>Continue with Google</span>
               </button>
 
-              {/* Login Link */}
               <div className="mt-8 text-center">
                 <p className="text-gray-400">
                   Already have an account?{" "}
@@ -331,7 +319,6 @@ const Register = () => {
                 </p>
               </div>
 
-              {/* Role Info */}
               <div className="mt-6 p-4 bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-xl">
                 <div className="flex items-center gap-3">
                   <FaGraduationCap className="text-blue-400 text-xl" />
@@ -343,7 +330,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Additional Info */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
               <div className="text-gray-400 text-sm">
                 <div className="text-green-400 font-bold">🔒 Secure</div>

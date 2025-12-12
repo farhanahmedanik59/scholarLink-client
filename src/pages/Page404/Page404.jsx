@@ -6,7 +6,6 @@ const Page404 = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] flex items-center justify-center p-4">
       <div className="max-w-4xl mx-auto text-center">
-        {/* Animated 404 Illustration */}
         <div className="relative mb-12">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-cyan-500/20 blur-3xl rounded-full animate-pulse"></div>
 
@@ -23,7 +22,6 @@ const Page404 = () => {
           </div>
         </div>
 
-        {/* Message */}
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Page <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Not Found</span>
@@ -35,7 +33,6 @@ const Page404 = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <Link
             to="/"
@@ -71,7 +68,6 @@ const Page404 = () => {
           </Link>
         </div>
 
-        {/* Help Section */}
         <div className="bg-gradient-to-br from-gray-900/40 to-gray-800/20 border border-gray-700/30 rounded-2xl p-8 backdrop-blur-sm">
           <h3 className="text-white text-xl font-semibold mb-4 flex items-center justify-center gap-2">
             <FaExclamationTriangle className="text-amber-400" />
@@ -97,7 +93,6 @@ const Page404 = () => {
           </div>
         </div>
 
-        {/* Footer Message */}
         <div className="mt-12 pt-8 border-t border-gray-700/30">
           <p className="text-gray-400 text-sm">
             Still having trouble?{" "}

@@ -13,7 +13,6 @@ const UsersManagement = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRole, setSelectedRole] = useState("All");
 
-  // Fetch users data
   const {
     data: users = [],
     isLoading,
@@ -46,7 +45,6 @@ const UsersManagement = () => {
       if (!nameMatch && !emailMatch) return false;
     }
 
-    // Role filter
     if (selectedRole !== "All") {
       const userRole = user.role?.toLowerCase() || "student";
       const filterRole = selectedRole.toLowerCase();
@@ -136,7 +134,6 @@ const UsersManagement = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] py-10 px-4">
       <div className="max-w-8xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl mb-6">
             <FaUsers className="text-white text-3xl" />
@@ -147,7 +144,6 @@ const UsersManagement = () => {
           <p className="text-gray-300">Total users: {users.length}</p>
         </div>
 
-        {/* Filters */}
         <div className="mb-8 flex flex-col md:flex-row gap-4 items-center">
           <div className="flex-1 relative">
             <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -179,14 +175,12 @@ const UsersManagement = () => {
           </div>
         </div>
 
-        {/* Debug info */}
         {users.length > 0 && (
           <div className="mb-4 p-4 bg-gray-900/40 rounded-xl border border-gray-700/50">
             <p className="text-gray-400 text-sm">Roles in database: {[...new Set(users.map((u) => u.role || "student"))].join(", ")}</p>
           </div>
         )}
 
-        {/* Users Table */}
         <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 rounded-2xl overflow-hidden border border-gray-700/50 backdrop-blur-sm">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -258,7 +252,6 @@ const UsersManagement = () => {
             </table>
           </div>
 
-          {/* Summary */}
           <div className="px-6 py-4 border-t border-gray-700/50">
             <p className="text-gray-400">
               Showing {filteredUsers.length} of {users.length} users

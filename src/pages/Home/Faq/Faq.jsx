@@ -159,7 +159,6 @@ const FAQSection = () => {
   return (
     <section className="bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] py-20 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl mb-6">
             <FaQuestionCircle className="text-white text-2xl" />
@@ -169,7 +168,6 @@ const FAQSection = () => {
           </h2>
           <p className="text-gray-300 text-center max-w-2xl mx-auto mb-8">Find answers to common questions about scholarships, applications, eligibility, and more</p>
 
-          {/* Search Bar */}
           <div className="max-w-2xl mx-auto mb-12">
             <div className="relative">
               <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -190,7 +188,6 @@ const FAQSection = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Categories Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-gray-900/60 border border-gray-700 rounded-2xl p-6 backdrop-blur-xl sticky top-6">
               <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
@@ -219,7 +216,6 @@ const FAQSection = () => {
                 ))}
               </div>
 
-              {/* Quick Stats */}
               <div className="mt-8 pt-6 border-t border-gray-700">
                 <h4 className="text-white font-bold text-sm mb-3">FAQ Stats</h4>
                 <div className="grid grid-cols-2 gap-3">
@@ -236,7 +232,6 @@ const FAQSection = () => {
             </div>
           </div>
 
-          {/* FAQ Content */}
           <div className="lg:col-span-3">
             <div className="bg-gray-900/60 border border-gray-700 rounded-2xl p-8 backdrop-blur-xl">
               <div className="flex items-center justify-between mb-8">
@@ -300,7 +295,6 @@ const FAQSection = () => {
                 )}
               </div>
 
-              {/* Contact CTA */}
               <div className="mt-12 pt-8 border-t border-gray-700">
                 <div className="bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-800/30 rounded-2xl p-8 text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">

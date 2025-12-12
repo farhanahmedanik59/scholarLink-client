@@ -61,7 +61,6 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0F1A2C] via-[#1A2B4D] to-[#2C3E50] py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Back to Home */}
         <div className="mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors group">
             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
@@ -107,7 +106,6 @@ const Login = () => {
               <p className="text-gray-400 text-center mb-8">Enter your credentials to continue</p>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Email Field */}
                 <div className="space-y-2">
                   <label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-gray-300">
                     <FaEnvelope className="text-blue-400" />
@@ -133,7 +131,6 @@ const Login = () => {
                   </div>
                 </div>
 
-                {/* Password Field */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-gray-300">
@@ -221,7 +218,6 @@ const Login = () => {
                 <span>Continue with Google</span>
               </button>
 
-              {/* Register Link */}
               <div className="mt-8 text-center">
                 <p className="text-gray-400">
                   Don't have an account?{" "}

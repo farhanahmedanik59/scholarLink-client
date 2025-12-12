@@ -5,10 +5,9 @@ import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
   const { role } = useRole();
-  console.log(role);
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Drawer toggle for mobile
-  const [activeRole, setActiveRole] = useState("admin"); // student, moderator, admin
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeRole, setActiveRole] = useState("admin");
   useEffect(() => {
     setActiveRole(role);
   }, [role]);
@@ -32,7 +31,7 @@ const DashboardLayout = () => {
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center">
                 <FaGraduationCap className="text-white text-xl" />
               </div>
-              <h1 className="text-white font-bold text-xl">ScholarLink</h1>
+              <h1 className="text-white font-bold text-xl">ScholarStream</h1>
             </div>
           </Link>
           <button className="text-gray-400 hover:text-white lg:hidden" onClick={() => setSidebarOpen(false)}>

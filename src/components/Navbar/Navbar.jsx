@@ -13,7 +13,6 @@ const Navbar = () => {
     { name: "All Scholarships", href: "/Allscholarships", icon: <FaBook /> },
   ];
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -38,7 +37,6 @@ const Navbar = () => {
     <nav className="bg-gray-900/90 backdrop-blur-lg border-b border-gray-700/50 text-white sticky top-0 z-50 shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center gap-3 group">
             <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
               <FaGraduationCap className="text-white text-xl" />
@@ -49,7 +47,6 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
           <div className="hidden md:flex space-x-1">
             {navItems.map((item) => (
               <Link
@@ -69,11 +66,8 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Right Side - Auth & Search */}
           <div className="flex items-center space-x-4">
-            {/* Auth Section */}
             {user ? (
-              // Logged In - User Profile Dropdown
               <div className="relative" ref={dropdownRef}>
                 <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="flex items-center gap-3 p-1 rounded-xl hover:bg-gray-800/50 transition-all duration-300 group">
                   <div className="relative">
@@ -105,10 +99,8 @@ const Navbar = () => {
                   <FaChevronDown className={`text-gray-400 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
                 </button>
 
-                {/* Dropdown Menu */}
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-64 bg-gray-900/95 backdrop-blur-xl border border-gray-700 rounded-xl shadow-2xl overflow-hidden animate-fadeIn">
-                    {/* User Info */}
                     <div className="p-4 border-b border-gray-700">
                       <div className="flex items-center gap-3">
                         {user.photoURL ? (
@@ -126,7 +118,6 @@ const Navbar = () => {
                       </div>
                     </div>
 
-                    {/* Menu Items */}
                     <div className="py-2">
                       <Link
                         to="/dashboard"
@@ -147,7 +138,6 @@ const Navbar = () => {
                       </Link>
                     </div>
 
-                    {/* Logout Button */}
                     <div className="p-4 border-t border-gray-700">
                       <button
                         onClick={handleLogout}
@@ -161,7 +151,6 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              // Logged Out - Login & Register Buttons
               <div className="flex items-center space-x-3">
                 <Link to="/login">
                   <button className="px-5 py-2 text-sm font-medium border border-gray-600 text-gray-300 hover:text-white hover:border-blue-500 rounded-xl hover:bg-blue-500/10 transition-all duration-300">
@@ -179,7 +168,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         <div className="md:hidden flex justify-center py-4 border-t border-gray-700/50 mt-2">
           <div className="flex space-x-6">
             {navItems.map((item) => (
@@ -198,7 +186,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Dropdown Animation */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
