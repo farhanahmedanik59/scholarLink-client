@@ -85,7 +85,6 @@ const MyApplications = () => {
       })
       .then((res) => {
         if (res.data.insertedId) {
-          console.log(res.data);
           Swal.fire({
             title: "Review Added",
             icon: "success",

@@ -12,7 +12,6 @@ const AdminRoute = ({ children }) => {
   if (loading || roleLoading) {
     return <h1>Loading</h1>;
   }
-  console.log(role);
 
   if (role !== "admin") {
     return <Unauthorized></Unauthorized>;

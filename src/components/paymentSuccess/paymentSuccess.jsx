@@ -22,7 +22,7 @@ const PaymentSuccess = () => {
     queryKey: ["paymentSuccess", sessionId],
     queryFn: async () => {
       const response = await axiosSecure.get(`/scholarship/${id}/payment`);
-      console.log(response.data);
+
       const data = response.data;
       return data;
     },

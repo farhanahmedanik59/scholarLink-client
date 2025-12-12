@@ -30,7 +30,6 @@ const AddScholarships = () => {
       };
 
       await axiosSecure.post("/scholarships", scholarshipData).then((res) => {
-        console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({
             title: "Scholarship Added!",

@@ -15,7 +15,7 @@ const PaymentError = () => {
     queryKey: ["paymentSuccess", apl_id],
     queryFn: async () => {
       const response = await axiosSecure.get(`/scholarship/${apl_id}/payment`);
-      console.log(response.data);
+
       const data = response.data;
       return data;
     },

@@ -64,7 +64,6 @@ const MyReviews = () => {
       return;
     }
 
-    console.log(editRating, editComment);
     try {
       const updatedReview = {
         ratingPoint: editRating,

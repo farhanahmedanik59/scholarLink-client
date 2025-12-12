@@ -42,7 +42,6 @@ const Hero = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Searching for:", searchQuery);
   };
 
   const scholarships = [

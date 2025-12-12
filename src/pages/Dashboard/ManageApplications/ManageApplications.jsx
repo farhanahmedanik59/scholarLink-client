@@ -128,7 +128,6 @@ const ManageApplications = () => {
         })
         .then((res) => {
           if (res.data.modifiedCount) {
-            console.log(res.data);
             setShowFeedbackModal(false);
             setFeedbackText("");
             refetch();

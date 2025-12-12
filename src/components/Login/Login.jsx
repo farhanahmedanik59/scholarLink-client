@@ -27,7 +27,6 @@ const Login = () => {
   const onSubmit = async (data) => {
     setError("");
     setIsLoading(true);
-    console.log("Login data:", data);
     try {
       const userCred = await signIn(data.email, data.password);
       if (userCred.user) {
