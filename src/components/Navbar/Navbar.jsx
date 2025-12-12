@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import { FaUser, FaSignOutAlt, FaTachometerAlt, FaChevronDown, FaGraduationCap, FaSearch, FaBell, FaHome, FaBook, FaQuestionCircle, FaFileAlt } from "react-icons/fa";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const role = useRole();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -126,15 +128,6 @@ const Navbar = () => {
                       >
                         <FaTachometerAlt className="text-blue-400" />
                         <span>Dashboard</span>
-                      </Link>
-
-                      <Link
-                        to="dashboard/myApplication"
-                        onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors"
-                      >
-                        <FaFileAlt className="text-yellow-400" />
-                        <span>My Applications</span>
                       </Link>
                     </div>
 

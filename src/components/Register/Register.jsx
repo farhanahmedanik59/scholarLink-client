@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaUser, FaEnvelope, FaLock, FaImage, FaArrowLeft, FaUserGraduate, FaShieldAlt, FaGraduationCap } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../../firebase/firebase.config";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
@@ -45,21 +47,26 @@ const Register = () => {
   };
 
   const onSubmit = async (data) => {
-    setIsLoading(true);
-    registerUser(data.email, data.password).then((userCred) => {
-      if (userCred.user) {
-        const user = userCred.user;
-        const userInfo = {
-          name: data.name,
-          email: user.email,
-          photoURL: data.photoURL,
-        };
-        axiosSecure.post("/user/auth", userInfo).then((res) => {
-          setIsLoading(false);
-          navigate("/");
-        });
-      }
-    });
+    try {
+      setIsLoading(true);
+      const userCred = await registerUser(data.email, data.password);
+      const user = userCred.user;
+      await updateProfile(user, {
+        displayName: data.name,
+        photoURL: data.photoURL,
+      });
+      const userInfo = {
+        name: data.name,
+        email: user.email,
+        photoURL: data.photoURL,
+      };
+      await axiosSecure.post("/user/auth", userInfo);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleRegister = () => {
