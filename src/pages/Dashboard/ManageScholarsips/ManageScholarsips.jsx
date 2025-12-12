@@ -85,11 +85,17 @@ const ManageScholarships = () => {
       };
 
       await axiosSecure.patch(`/scholarships/${selectedScholarship._id}`, updatedData);
-      alert("Updated");
+      Swal.fire({
+        title: "updated",
+        icon: "success",
+      });
       setShowUpdateModal(false);
       refetch();
     } catch (error) {
-      alert("Update failed");
+      Swal.fire({
+        title: "updated failed",
+        icon: "error",
+      });
     }
   };
 
