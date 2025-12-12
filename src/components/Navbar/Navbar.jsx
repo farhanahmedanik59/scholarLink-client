@@ -11,8 +11,6 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", href: "/", icon: <FaHome /> },
     { name: "All Scholarships", href: "/Allscholarships", icon: <FaBook /> },
-    // { name: "How It Works", href: "/how-it-works", icon: <FaQuestionCircle /> },
-    { name: "Resources", href: "/resources", icon: <FaFileAlt /> },
   ];
 
   // Close dropdown when clicking outside
@@ -140,7 +138,7 @@ const Navbar = () => {
                       </Link>
 
                       <Link
-                        to="/my-applications"
+                        to="dashboard/myApplication"
                         onClick={() => setIsDropdownOpen(false)}
                         className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors"
                       >
@@ -190,6 +188,12 @@ const Navbar = () => {
                 <span className="text-xs mt-1">{item.name}</span>
               </Link>
             ))}
+            <Link to={"/dashboard"} className="flex flex-col items-center text-gray-400 hover:text-white transition-colors">
+              <span className="text-lg">
+                <FaTachometerAlt></FaTachometerAlt>
+              </span>
+              <span className="text-xs mt-1">Dashboard</span>
+            </Link>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaGraduationCap, FaPaperPlane } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const AddScholarships = () => {
   const { user } = useAuth();
@@ -28,11 +29,21 @@ const AddScholarships = () => {
         serviceCharge: Number(data.serviceCharge),
       };
 
-      await axiosSecure.post("/scholarships", scholarshipData);
-      alert("Scholarship added successfully!");
+      await axiosSecure.post("/scholarships", scholarshipData).then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Scholarship Added!",
+            icon: "success",
+          });
+        }
+      });
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to add scholarship");
+      Swal.fire({
+        title: "Error!",
+        icon: "error",
+      });
     }
   };
 
