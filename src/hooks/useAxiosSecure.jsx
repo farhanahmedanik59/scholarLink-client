@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 const axiosSecure = axios.create({
-  baseURL: "https://scholarstream-server-eight.vercel.app",
+  baseURL: "http://localhost:4000",
 });
 const useAxiosSecure = () => {
   const navigate = useNavigate();

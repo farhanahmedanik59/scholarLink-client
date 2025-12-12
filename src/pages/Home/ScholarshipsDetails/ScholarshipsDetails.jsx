@@ -61,7 +61,7 @@ const ScholarshipDetails = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["scholarship", id],
+    queryKey: ["scholarship"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/scholarships/${id}`);
       return res.data;

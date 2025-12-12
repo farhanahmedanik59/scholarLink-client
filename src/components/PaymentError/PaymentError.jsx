@@ -12,7 +12,7 @@ const PaymentError = () => {
   const apl_id = searchParams.get("apl_id");
 
   const { data: scholarship, isLoading } = useQuery({
-    queryKey: ["paymentSuccess", apl_id],
+    queryKey: ["paymentError", apl_id],
     queryFn: async () => {
       const response = await axiosSecure.get(`/scholarship/${apl_id}/payment`);
 
