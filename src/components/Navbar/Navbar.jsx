@@ -115,7 +115,7 @@ const Navbar = () => {
                         <div>
                           <h4 className="font-bold text-white">{user.displayName || "Scholar User"}</h4>
                           <p className="text-sm text-gray-400">{user.email || "student@example.com"}</p>
-                          <span className="inline-block mt-1 px-2 py-1 text-xs bg-blue-900/30 text-blue-300 rounded-full">{user.role || "Student"}</span>
+                          <span className="inline-block mt-1 px-2 py-1 text-xs bg-blue-900/30 text-blue-300 rounded-full">{role.role || "Student"}</span>
                         </div>
                       </div>
                     </div>
