@@ -11,6 +11,11 @@ const PaymentError = () => {
   const [searchParams] = useSearchParams();
   const apl_id = searchParams.get("apl_id");
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    axiosSecure.post(`/payment-error?apl_id=${apl_id}`);
+  }, [apl_id]);
+
   const { data: scholarship, isLoading } = useQuery({
     queryKey: ["paymentError", apl_id],
     queryFn: async () => {
@@ -21,10 +26,6 @@ const PaymentError = () => {
     },
     enabled: !!apl_id,
   });
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [apl_id]);
 
   if (isLoading) {
     return (
