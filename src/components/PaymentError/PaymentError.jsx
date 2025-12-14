@@ -10,20 +10,21 @@ const PaymentError = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const apl_id = searchParams.get("apl_id");
+  const { user } = useAuth();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!apl_id) return;
     const logPaymentError = async () => {
       try {
-        await axiosSecure.post(`/payment-error?apl_id=${apl_id}`);
+        await axiosSecure.post(`/payment-error?apl_id=${apl_id}`, user);
       } catch (err) {
         console.error("Failed to log payment error", err);
       }
     };
 
     logPaymentError();
-  }, [apl_id, axiosSecure]);
+  }, [apl_id, axiosSecure, user]);
 
   const { data: scholarship, isLoading } = useQuery({
     queryKey: ["paymentError", apl_id],
