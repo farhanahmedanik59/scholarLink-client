@@ -4,7 +4,8 @@ import React, { useEffect } from "react";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 const axiosSecure = axios.create({
-  baseURL: "https://scholarstream-server-eight.vercel.app",
+  // baseURL: "https://scholarstream-server-eight.vercel.app",
+  baseURL: "http://localhost:4000",
 });
 const useAxiosSecure = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const useAxiosSecure = () => {
           logout().then(() => {
             navigate("/login");
           });
+          console.log("error");
         }
         return Promise.reject(error);
       }
@@ -32,7 +34,7 @@ const useAxiosSecure = () => {
       axiosSecure.interceptors.request.eject(requestInterceptor);
       axiosSecure.interceptors.response.eject(responseInterceptor);
     };
-  }, []);
+  }, [user]);
   return axiosSecure;
 };
 
