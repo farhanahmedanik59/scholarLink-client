@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, NavLink, useNavigate, Link } from "react-router";
-import { FaBars, FaTimes, FaUser, FaGraduationCap, FaTachometerAlt, FaUserCog, FaShieldAlt, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaBars, FaTimes, FaUser, FaGraduationCap, FaUsers, FaPlusCircle, FaEdit, FaChartBar, FaTasks, FaComments, FaStar, FaSignOutAlt } from "react-icons/fa";
 import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
@@ -8,9 +8,11 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeRole, setActiveRole] = useState("admin");
+
   useEffect(() => {
     setActiveRole(role);
   }, [role]);
+
   const roleTitles = {
     student: "Student Dashboard",
     moderator: "Moderator Dashboard",
@@ -45,7 +47,7 @@ const DashboardLayout = () => {
             className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
             onClick={() => setSidebarOpen(false)}
           >
-            <FaUserCog /> My Profile
+            <FaUser /> My Profile
           </NavLink>
 
           {activeRole === "student" && (
@@ -55,14 +57,14 @@ const DashboardLayout = () => {
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> My Applications
+                <FaGraduationCap /> My Applications
               </NavLink>
               <NavLink
                 to="/dashboard/myReviews"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> My Reviews
+                <FaStar /> My Reviews
               </NavLink>
             </>
           )}
@@ -74,32 +76,32 @@ const DashboardLayout = () => {
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> User Management
+                <FaUsers /> User Management
               </NavLink>
               <NavLink
                 to="/dashboard/addScholarships"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> Add ScholarShips
+                <FaPlusCircle /> Add ScholarShips
               </NavLink>
               <NavLink
                 to="/dashboard/manageScholarships"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> Manage ScholarShips
+                <FaEdit /> Manage ScholarShips
               </NavLink>
-
               <NavLink
                 to="/dashboard/analytics"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> Analytics
+                <FaChartBar /> Analytics
               </NavLink>
             </>
           )}
+
           {activeRole === "moderator" && (
             <>
               <NavLink
@@ -107,14 +109,14 @@ const DashboardLayout = () => {
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> Manage Applications
+                <FaTasks /> Manage Applications
               </NavLink>
               <NavLink
                 to="/dashboard/AllReviews"
                 className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg ${isActive ? "bg-purple-600/20 text-white" : "text-gray-300 hover:bg-gray-700/30"}`}
                 onClick={() => setSidebarOpen(false)}
               >
-                <FaUserCog /> All Reviews
+                <FaComments /> All Reviews
               </NavLink>
             </>
           )}
@@ -128,14 +130,14 @@ const DashboardLayout = () => {
       {sidebarOpen && <div className="fixed inset-0 z-40 bg-opacity-50 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="flex items-center justify-between px-6 py-4 bg-[#0F1A2C]  shadow-sm">
+        <header className="flex items-center justify-between px-6 py-4 bg-[#0F1A2C] shadow-sm">
           <button className="text-gray-600 lg:hidden" onClick={() => setSidebarOpen(true)}>
             <FaBars className="w-6 h-6" />
           </button>
           <h1 className="text-xl text-white font-bold">{roleTitles[activeRole]}</h1>
         </header>
 
-        <main className="flex-1 overflow-y-auto ">
+        <main className="flex-1 overflow-y-auto">
           <Outlet />
         </main>
       </div>
