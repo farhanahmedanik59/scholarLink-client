@@ -140,7 +140,7 @@ const AllReviews = () => {
           <p className="text-gray-400">Total: {reviews.length} reviews from students</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 ">
           <div className="bg-gray-800 rounded-xl border border-gray-700 p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -205,11 +205,11 @@ const AllReviews = () => {
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <div className="flex items-center gap-2">
                 <FaUniversity className="text-gray-400" />
                 <select
-                  className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                  className="bg-gray-900 border border-gray-700 rounded-lg md:px-3 py-2 text-white focus:outline-none focus:border-blue-500"
                   value={universityFilter}
                   onChange={(e) => setUniversityFilter(e.target.value)}
                 >
