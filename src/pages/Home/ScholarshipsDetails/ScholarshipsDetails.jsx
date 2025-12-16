@@ -130,7 +130,6 @@ const ScholarshipDetails = () => {
     return stars;
   };
 
-  // Calculate average rating with 1 decimal place
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const total = reviews.reduce((acc, review) => acc + (review.ratingPoint || 0), 0);
@@ -263,7 +262,7 @@ const ScholarshipDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                       <button className="p-3 rounded-xl bg-gray-800 border border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 transition-colors">
                         <FaHeart />
                       </button>
