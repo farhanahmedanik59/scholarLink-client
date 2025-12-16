@@ -575,7 +575,7 @@ const ScholarshipDetails = () => {
                               <p className="text-gray-300 text-sm">5-Star Reviews</p>
                             </div>
                             <div className="text-center p-4 bg-gray-800/50 rounded-xl">
-                              <div className="text-3xl font-bold text-cyan-400 mb-1">{formatDate(reviews[0]?.reviewDate)}</div>
+                              <div className="md:text-3xl font-bold text-cyan-400 mb-1">{formatDate(reviews[0]?.reviewDate)}</div>
                               <p className="text-gray-300 text-sm">Latest Review</p>
                             </div>
                           </div>
