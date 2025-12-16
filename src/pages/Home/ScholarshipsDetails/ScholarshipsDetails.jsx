@@ -485,7 +485,7 @@ const ScholarshipDetails = () => {
                       <div className="space-y-6">
                         {reviews.map((review) => (
                           <div key={review._id} className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-2xl p-6">
-                            <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-start flex-wrap justify-between mb-4">
                               <div className="flex items-center gap-4">
                                 <div className="relative">
                                   {review.userImage ? (
@@ -525,7 +525,7 @@ const ScholarshipDetails = () => {
                                 </div>
                               </div>
 
-                              <div className="flex flex-col items-end">
+                              <div className="flex flex-col  items-end">
                                 <div className="flex items-center gap-2">
                                   <div className="flex items-center gap-1">{renderStars(review.ratingPoint || 0)}</div>
                                   <span className="text-yellow-400 font-bold text-lg">{(review.ratingPoint || 0).toFixed(1)}</span>
