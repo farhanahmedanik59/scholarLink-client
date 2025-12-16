@@ -28,6 +28,7 @@ const PaymentSuccess = () => {
     },
     enabled: !!sessionId && !!id,
   });
+  console.log(scholarship);
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
