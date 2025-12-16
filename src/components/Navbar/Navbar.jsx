@@ -37,15 +37,15 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-900/90 backdrop-blur-lg border-b border-gray-700/50 text-white sticky top-0 z-50 shadow-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex-shrink-0 flex items-center gap-3 group">
+          <Link to="/" className="flex-shrink-0 flex items-center md:gap-3 gap-1 group">
             <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
               <FaGraduationCap className="text-white text-xl" />
             </div>
             <div>
-              <span className="text-xl font-bold text-white">Scholar</span>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Stream</span>
+              <span className="md:text-xl font-bold text-white">Scholar</span>
+              <span className="md:text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Stream</span>
             </div>
           </Link>
 
@@ -144,7 +144,7 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center md:space-x-3 space-x-1">
                 <Link to="/login">
                   <button className="px-5 py-2 text-sm font-medium border border-gray-600 text-gray-300 hover:text-white hover:border-blue-500 rounded-xl hover:bg-blue-500/10 transition-all duration-300">
                     Login
