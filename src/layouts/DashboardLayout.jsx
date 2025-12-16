@@ -27,16 +27,16 @@ const DashboardLayout = () => {
         className={`fixed inset-y-0 left-0 z-50 w-56 bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:flex-shrink-0`}
       >
-        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-700/50">
+        <div className="flex items-center gap-2 h-16 px-2 border-b border-gray-700/50">
           <Link to={"/"}>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center md:gap-3 gap-1">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center">
                 <FaGraduationCap className="text-white text-xl" />
               </div>
               <h1 className="text-white font-bold text-xl">ScholarStream</h1>
             </div>
           </Link>
-          <button className="text-gray-400 hover:text-white lg:hidden" onClick={() => setSidebarOpen(false)}>
+          <button className="text-gray-400 hover:text-white lg:hidden " onClick={() => setSidebarOpen(false)}>
             <FaTimes className="w-5 h-5" />
           </button>
         </div>
