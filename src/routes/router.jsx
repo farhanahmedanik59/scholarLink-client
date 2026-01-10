@@ -22,6 +22,7 @@ import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 import ManageApplications from "../pages/Dashboard/ManageApplications/ManageApplications";
 import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
 import Analytics from "../pages/Dashboard/Analytics/Analytics";
+import BlogsComponent from "../components/Blogs/Blogs";
 
 export const router = createBrowserRouter([
   {
@@ -38,11 +39,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "scholarships/:id",
-        element: (
-          <PrivateRoute>
-            <ScholarshipDetails></ScholarshipDetails>
-          </PrivateRoute>
-        ),
+        element: <ScholarshipDetails></ScholarshipDetails>,
       },
       {
         path: "register",
@@ -51,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "AllScholarships",
         Component: AllScholarships,
+      },
+      {
+        path: "blogs",
+        Component: BlogsComponent,
       },
     ],
   },

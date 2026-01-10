@@ -3,6 +3,9 @@ import Hero from "../Hero/Hero";
 import TopScholarships from "../TopScholarships/TopScholarships";
 import Faq from "../Faq/Faq";
 import SuccessStories from "../SuccessStory/SuccessStory";
+import HighlightsSection from "../Highlightes/Highlites";
+import StatisticsSection from "../Statistics/ Statistics";
+import TestimonialsPage from "../Testmonial/Testimonial";
 
 const Home = () => {
   window.scrollTo(0, 0);
@@ -11,6 +14,9 @@ const Home = () => {
       <Hero></Hero>
       <TopScholarships></TopScholarships>
       <SuccessStories></SuccessStories>
+      <HighlightsSection></HighlightsSection>
+      <StatisticsSection></StatisticsSection>
+      <TestimonialsPage></TestimonialsPage>
       <Faq></Faq>
     </div>
   );

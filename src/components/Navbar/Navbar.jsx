@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router";
 import useAuth from "../../hooks/useAuth";
-import { FaUser, FaSignOutAlt, FaTachometerAlt, FaChevronDown, FaGraduationCap, FaSearch, FaBell, FaHome, FaBook, FaQuestionCircle, FaFileAlt } from "react-icons/fa";
+import { FaUser, FaSignOutAlt, FaTachometerAlt, FaChevronDown, FaGraduationCap, FaSearch, FaBell, FaHome, FaBook, FaQuestionCircle, FaFileAlt, FaMicroblog } from "react-icons/fa";
 import useRole from "../../hooks/useRole";
+import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -60,11 +61,32 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            <Link
+              to={"/blogs"}
+              onClick={() => setIsDropdownOpen(false)}
+              href="#faq"
+              className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors"
+            >
+              <FaMicroblog className="text-blue-400" />
+              <span>Blogs</span>
+            </Link>
+
             {user && (
-              <Link to="/dashboard" onClick={() => setIsDropdownOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors">
-                <FaTachometerAlt className="text-blue-400" />
-                <span>Dashboard</span>
-              </Link>
+              <>
+                <Link to="/dashboard" onClick={() => setIsDropdownOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors">
+                  <FaTachometerAlt className="text-blue-400" />
+                  <span>Dashboard</span>
+                </Link>
+                <Link
+                  to={"/dashboard/myProfile"}
+                  onClick={() => setIsDropdownOpen(false)}
+                  href="#faq"
+                  className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors"
+                >
+                  <CgProfile className="text-blue-400" />
+                  <span>Profile</span>
+                </Link>
+              </>
             )}
           </div>
 
