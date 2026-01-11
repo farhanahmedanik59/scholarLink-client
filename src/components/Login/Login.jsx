@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash, FaLock, FaEnvelope, FaArrowLeft, FaGoogle } from "react-icons/fa";
-import { Link, Navigate, useNavigate } from "react-router";
+import { FaEye, FaEyeSlash, FaLock, FaEnvelope, FaArrowLeft, FaGoogle, FaUserSecret } from "react-icons/fa";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDemoLoading, setIsDemoLoading] = useState(false);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { signIn, googleAuth } = useAuth();
@@ -17,6 +18,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm({
     defaultValues: {
       email: "",
@@ -57,6 +59,31 @@ const Login = () => {
     });
   };
 
+  const handleDemoLogin = () => {
+    setError("");
+    setIsDemoLoading(true);
+
+    // Set demo credentials in form
+    setValue("email", "admin@gmail.com");
+    setValue("password", "Admin9259@");
+
+    // Auto-submit after a short delay for better UX
+    setTimeout(() => {
+      signIn("admin@gmail.com", "Admin9259@")
+        .then((userCred) => {
+          if (userCred.user) {
+            navigate("/");
+          }
+          setIsDemoLoading(false);
+        })
+        .catch((error) => {
+          setError("Demo login failed. Please try again.");
+          setIsDemoLoading(false);
+          reset();
+        });
+    }, 500);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0F1A2C] via-[#1A2B4D] to-[#2C3E50] py-8 px-4">
       <div className="max-w-6xl mx-auto">
@@ -82,7 +109,30 @@ const Login = () => {
                 Sign in to access your personalized scholarship matches, track applications, and connect with our global community of scholars.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
+              {/* Demo Credentials Card */}
+              <div className="mb-8 p-6 bg-gradient-to-r from-purple-900/20 to-pink-900/20 border border-purple-700/30 rounded-2xl backdrop-blur-sm">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-500">
+                    <FaUserSecret className="text-white text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-white mb-2">Try Demo Account</h3>
+                    <p className="text-gray-300 text-sm mb-3">Experience the platform with pre-configured demo credentials. Explore all features without creating an account.</p>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Email:</span>
+                        <code className="px-2 py-1 bg-gray-800/50 rounded text-cyan-300 font-mono">admin@gmail.com</code>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Password:</span>
+                        <code className="px-2 py-1 bg-gray-800/50 rounded text-cyan-300 font-mono">Admin9259@</code>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-700/30 rounded-xl">
                   <div className="text-2xl font-bold text-blue-400 mb-1">500+</div>
                   <p className="text-gray-300 text-sm">Scholarships</p>
@@ -103,6 +153,40 @@ const Login = () => {
             <div className="bg-gray-900/60 backdrop-blur-xl border border-gray-700 rounded-2xl p-8 shadow-2xl">
               <h2 className="text-2xl font-bold text-white text-center mb-2">Sign In to Your Account</h2>
               <p className="text-gray-400 text-center mb-8">Enter your credentials to continue</p>
+
+              {/* Demo Login Button - Top */}
+              <button
+                onClick={handleDemoLogin}
+                disabled={isDemoLoading}
+                className={`w-full mb-6 py-3 rounded-xl font-bold text-lg transition-all duration-300 ${
+                  isDemoLoading
+                    ? "bg-purple-700 cursor-not-allowed"
+                    : "bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white hover:shadow-lg hover:shadow-purple-500/25"
+                } flex items-center justify-center gap-2`}
+              >
+                {isDemoLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                    Logging in with Demo...
+                  </>
+                ) : (
+                  <>
+                    <FaUserSecret />
+                    Login with Demo Account
+                  </>
+                )}
+              </button>
+
+              <div className="my-6">
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-700"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-4 bg-gray-900 text-gray-400">Or sign in manually</span>
+                  </div>
+                </div>
+              </div>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-2">
@@ -170,7 +254,12 @@ const Login = () => {
                   </div>
                 </div>
 
-                {error && <p className="text-white">{error}</p>}
+                {error && (
+                  <div className="p-4 bg-red-900/20 border border-red-700/30 rounded-xl">
+                    <p className="text-red-400 text-center">{error}</p>
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isLoading}

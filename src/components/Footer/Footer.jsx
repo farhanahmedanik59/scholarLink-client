@@ -1,13 +1,14 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
     { icon: <FaFacebook />, url: "https://facebook.com", label: "Facebook" },
-    { icon: <FaXTwitter />, url: "https://twitter.com", label: "Twitter" },
+    { icon: <FaXTwitter />, url: "https://x.com", label: "Twitter" },
     { icon: <FaInstagram />, url: "https://instagram.com", label: "Instagram" },
     { icon: <FaLinkedin />, url: "https://linkedin.com", label: "LinkedIn" },
     { icon: <FaYoutube />, url: "https://youtube.com", label: "YouTube" },
@@ -20,7 +21,7 @@ const Footer = () => {
           <div className="mb-8 md:mb-0">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-xl font-bold text-white">SL</span>
+                <span className="text-xl font-bold text-white">S</span>
               </div>
               <div>
                 <h2 className="text-2xl font-bold tracking-tight">
@@ -53,24 +54,14 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link to={"/privacy"} className="text-gray-400 hover:text-white transition-colors">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Contact Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  FAQs
-                </a>
+                <Link to={"/blogs"} href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Blogs
+                </Link>
               </li>
             </ul>
           </div>

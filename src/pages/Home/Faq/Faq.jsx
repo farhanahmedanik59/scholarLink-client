@@ -157,7 +157,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section id="faq" className="bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] py-20 px-4">
+    <section id="faq" className="bg-gradient-to-b from-[#0F1A2C]  py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl mb-6">

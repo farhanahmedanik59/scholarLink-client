@@ -6,6 +6,10 @@ import SuccessStories from "../SuccessStory/SuccessStory";
 import HighlightsSection from "../Highlightes/Highlites";
 import StatisticsSection from "../Statistics/ Statistics";
 import TestimonialsPage from "../Testmonial/Testimonial";
+import FeaturesSection from "../Feature/Feature";
+import ServicesSection from "../Service/Service";
+import CallToActionSection from "../Call/Call";
+import ScholarshipCalculatorSection from "../Calculator/Calculator";
 
 const Home = () => {
   window.scrollTo(0, 0);
@@ -17,6 +21,10 @@ const Home = () => {
       <HighlightsSection></HighlightsSection>
       <StatisticsSection></StatisticsSection>
       <TestimonialsPage></TestimonialsPage>
+      <FeaturesSection></FeaturesSection>
+      <CallToActionSection></CallToActionSection>
+      <ScholarshipCalculatorSection></ScholarshipCalculatorSection>
+      <ServicesSection></ServicesSection>
       <Faq></Faq>
     </div>
   );

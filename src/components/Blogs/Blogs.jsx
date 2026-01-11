@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch, FaCalendarAlt, FaUser, FaTag, FaArrowRight, FaBookOpen, FaShareAlt, FaComment, FaEye, FaBookmark, FaRegBookmark, FaFire, FaGraduationCap } from "react-icons/fa";
 
 const BlogsComponent = () => {
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [savedPosts, setSavedPosts] = useState(new Set());

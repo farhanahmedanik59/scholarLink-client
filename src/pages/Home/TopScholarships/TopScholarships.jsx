@@ -57,7 +57,7 @@ const TopScholarships = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-[#0F1A2C] to-[#1A2B4D] py-16 px-4">
+    <section className="bg-gradient-to-b from-[#0F1A2C]  py-16 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">

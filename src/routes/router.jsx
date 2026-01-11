@@ -23,6 +23,7 @@ import ManageApplications from "../pages/Dashboard/ManageApplications/ManageAppl
 import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
 import Analytics from "../pages/Dashboard/Analytics/Analytics";
 import BlogsComponent from "../components/Blogs/Blogs";
+import PrivacyPolicySection from "../components/Policy/Policy";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "blogs",
         Component: BlogsComponent,
+      },
+      {
+        path: "privacy",
+        Component: PrivacyPolicySection,
       },
     ],
   },
